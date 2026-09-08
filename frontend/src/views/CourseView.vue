@@ -112,14 +112,14 @@ watch(courseId, async () => {
 </script>
 
 <template>
-  <NotFoundState v-if="!course" title="没有找到这门课程" description="未知 courseId 不会回退到其他课程，请返回学习主题重新选择。" back-to="/topics" back-label="返回学习主题" />
+  <NotFoundState v-if="!course" title="没有找到这门课程" description="未知 courseId 不会回退到其他课程，请返回通识基础重新选择。" back-to="/topics" back-label="返回通识基础" />
   <div v-else class="page-container">
     <section class="course-hero">
       <div class="hero-copy"><span class="tag purple">{{ course.category }}</span><h1>{{ course.title }}</h1><p>{{ course.description }}{{ dataMode === 'mock' ? ' 从核心概念出发，逐步走向受控实践。' : '' }}</p><div class="meta"><span>{{ course.level }}</span><span>{{ chapterCount }} 章 · {{ displayLessons.length }} 节</span><span>{{ course.learners === undefined ? '学习人数 —' : `${course.learners.toLocaleString()} 人学习` }}</span><span>{{ dataMode === 'api' ? (courseDetail?.data.rating ? `${courseDetail.data.rating} 分` : '评分 —') : '4.9 分' }}</span></div><div class="teacher"><CommunityAvatar :name="courseDetail?.data.instructor?.name || '讲师'" :avatar-key="dataMode === 'mock' ? 'official-teacher' : undefined" /><div><strong>{{ courseDetail?.data.instructor?.name || (dataMode === 'api' ? '讲师待配置' : '林知远老师') }}</strong><small>{{ courseDetail?.data.instructor?.title || (dataMode === 'api' ? '信息待配置' : '高校 AI 应用课程讲师') }}</small></div><FollowButton v-if="dataMode === 'mock'" :active="followed" @click="followed = !followed" /></div></div>
       <CategoryCover :title="course.title" :media="course" eager />
       <aside class="hero-progress"><ProgressBar v-if="accountDataReady" :value="store.courseProgress[course.id] ?? course.progress ?? 0" label="学习进度" /><p v-else class="notice">{{ accountDataMessage }}</p><strong>当前第 {{ currentLesson }} / {{ displayLessons.length }} 课时</strong><button class="button primary full-width" type="button" :disabled="!displayLessons.length" @click="startLearning()">{{ store.courseProgress[course.id] ? '继续学习' : '开始学习' }}</button><button class="button secondary full-width" type="button" :disabled="!displayLessons.length" @click="completeCurrentLesson">完成本节</button><button class="button secondary full-width" type="button" @click="store.toggleFavorite('course', course.id)">{{ store.isFavorite('course', course.id) ? '已收藏' : '收藏课程' }}</button></aside>
     </section>
-    <RouterLink class="text-link" :to="`/community/search?bindingId=${courseId}`">查看课程相关讨论 ↗</RouterLink>
+    <RouterLink class="text-link" :to="`/community/search?bindingId=${courseId}`">查看课程相关讨论 <AppIcon name="arrow-up-right" :size="14" /></RouterLink>
     <div class="learning-layout">
       <aside class="outline-panel sticky">
         <button class="outline-title" type="button" @click="expanded = !expanded"><strong>课程大纲</strong><span>{{ expanded ? '收起' : '展开' }}</span></button>

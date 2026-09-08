@@ -2,6 +2,8 @@
 import CommunityAvatar from '../components/base/CommunityAvatar.vue'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import type { CommunityProfileDto } from '@ai-learning-hub/contracts'
 import AppDialog from '../components/base/AppDialog.vue'
 import AppIcon from '../components/base/AppIcon.vue'
 import ProgressBar from '../components/ProgressBar.vue'
@@ -9,6 +11,9 @@ import { userProfile, assessmentAchievements } from '../data/mock'
 import PageHeroArt from '../components/PageHeroArt.vue'
 import CategoryCover from '../components/base/CategoryCover.vue'
 import { dataMode } from '../services/api/client'
+import { behaviorApi } from '../services/api/behavior'
+import { communityApi } from '../services/api/community'
+import { growthIcon, growthProgressUnit, growthTier, type GrowthTier } from '../community/growth'
 import { useAuthStore } from '../stores/auth'
 import { useArticlesStore } from '../stores/content/articles'
 import { useCoursesStore } from '../stores/content/courses'
@@ -18,6 +23,8 @@ import { useLearningStore } from '../stores/learning'
 
 const store = useLearningStore()
 const auth = useAuthStore()
+const router = useRouter()
+const communityProfile = ref<CommunityProfileDto | null>(null)
 const courseStore = useCoursesStore()
 const labStore = useLabsStore()
 const resourceStore = useResourcesStore()
@@ -26,18 +33,15 @@ const { items: courses } = storeToRefs(courseStore)
 const { items: labs } = storeToRefs(labStore)
 const { items: resources } = storeToRefs(resourceStore)
 const { items: articles } = storeToRefs(articleStore)
-const displayName = computed(() => dataMode === 'api' ? (auth.user?.displayName || '未登录') : store.profile.nickname)
+const displayName = computed(() => communityProfile.value?.displayName || auth.user?.displayName || '学习者')
 const accountDataReady = computed(() => dataMode === 'mock' || store.accountSyncState === 'synced')
 const accountDataMessage = computed(() => {
   if (!auth.user) return '登录后查看账号学习数据。'
   return store.accountSyncState === 'sync-error' ? '账号学习数据暂不可用。' : '正在同步账号学习数据…'
 })
-const editOpen = ref(false)
 const planOpen = ref(false)
 const badgeOpen = ref('')
 const favoriteTab = ref('全部')
-const editName = ref(store.profile.nickname)
-const editBio = ref(store.profile.bio)
 const planName = ref('')
 const planDate = ref('')
 const favoriteItems = computed(() => {
@@ -65,16 +69,15 @@ const abilities = [
   ['AI 工程实践', 76, '#ff4d1f'], ['数据理解与处理', 64, '#27b86b'], ['模型应用', 82, '#6e5bff'],
   ['AI 创新与设计', 58, '#e5a91d'], ['编程与工具', 74, '#3478f6'], ['AI 素养与伦理', 69, '#27b86b'],
 ]
-const badges = assessmentAchievements
-const openEdit = () => {
-  editName.value = store.profile.nickname
-  editBio.value = store.profile.bio
-  editOpen.value = true
-}
-const saveProfile = () => {
-  store.saveProfile(editName.value, editBio.value)
-  editOpen.value = false
-}
+type BadgeItem = { key: string; title: string; icon: string; description: string; unlocked: boolean; awardedAt?: string; progress?: { current: number; target: number }; rule?: { type?: string; event?: string }; earnerCount?: number; tier: GrowthTier }
+const apiBadges = ref<BadgeItem[]>([])
+const mockBadges = computed<BadgeItem[]>(() => assessmentAchievements.map((badge) => ({ key: badge.title, title: badge.title, icon: badge.icon, description: badge.description, unlocked: badge.unlocked, tier: growthTier(badge.title) })))
+const badges = computed<BadgeItem[]>(() => dataMode === 'api' ? apiBadges.value : mockBadges.value)
+const unlockedCount = computed(() => badges.value.filter((badge) => badge.unlocked).length)
+const activeBadge = computed(() => badges.value.find((badge) => badge.key === badgeOpen.value))
+const formatBadgeDate = (value?: string) => value ? new Date(value).toLocaleDateString('zh-CN') : ''
+const lockedLabel = (badge: BadgeItem) => badge.progress && badge.progress.target > badge.progress.current ? `再完成 ${badge.progress.target - badge.progress.current} ${growthProgressUnit(badge.rule)}解锁` : '保持学习解锁'
+const openEdit = () => router.push(`/community/user/${auth.user?.username}?settings=1`)
 const createPlan = async () => {
   if (!planName.value.trim() || !planDate.value) return
   if (!await store.addPlan({
@@ -88,21 +91,27 @@ const createPlan = async () => {
   planOpen.value = false
 }
 onMounted(() => {
-  void Promise.all([courseStore.load(), labStore.load(), resourceStore.load(), articleStore.load()])
+  void Promise.all([
+    courseStore.load(), labStore.load(), resourceStore.load(), articleStore.load(),
+    auth.user ? communityApi.profile(auth.user.username).then((profile) => { communityProfile.value = profile }) : Promise.resolve(),
+    ...(dataMode === 'api' && auth.user ? [behaviorApi.achievements().then(({ items }) => {
+      apiBadges.value = items.map((item) => ({ key: item.code, title: item.name, icon: growthIcon(item.code), description: item.description, unlocked: item.unlocked, awardedAt: item.unlockedAt || undefined, progress: item.progress, rule: item.rule, earnerCount: item.earnerCount, tier: growthTier(item.code) }))
+    }).catch(() => {})] : []),
+  ])
 })
 </script>
 
 <template>
-  <nav class="community-profile-links"><RouterLink :to="`/community/user/${auth.user?.username}`">我的动态与回答</RouterLink><RouterLink :to="`/community/user/${auth.user?.username}?tab=topics`">关注的话题</RouterLink><RouterLink :to="`/community/user/${auth.user?.username}?tab=following`">关注的人</RouterLink><RouterLink to="/bookmarks">我的收藏与笔记</RouterLink><RouterLink to="/notifications">社区通知</RouterLink></nav>
+  <nav class="community-profile-links"><RouterLink :to="`/community/user/${auth.user?.username}`">我的社区主页</RouterLink><RouterLink :to="`/community/user/${auth.user?.username}?tab=topics`">关注的话题</RouterLink><RouterLink :to="`/community/user/${auth.user?.username}?tab=following`">关注的人</RouterLink><RouterLink to="/bookmarks">我的收藏与笔记</RouterLink><RouterLink to="/notifications">社区通知</RouterLink></nav>
   <div class="page-container profile-page">
     <section class="profile-hero">
       <PageHeroArt visual-key="profileHeroAssetId" />
-      <div class="profile-user"><CommunityAvatar :src="auth.user?.avatarUrl" :username="auth.user?.username" :name="displayName" size="lg" /><div><h1>{{ displayName }} <small>{{ dataMode === 'api' ? '统一学习账号' : '高校认证' }}</small></h1><p>{{ dataMode === 'api' ? (auth.user?.email || '尚未登录') : userProfile.program }}</p><span>{{ dataMode === 'api' ? (auth.user ? '个人介绍尚未配置' : '登录后查看个人学习档案') : store.profile.bio }}</span><div v-if="dataMode === 'mock'" class="hero-actions"><button class="button secondary small" type="button" @click="openEdit">编辑资料</button></div></div></div>
+      <div class="profile-user"><CommunityAvatar :src="auth.user?.avatarUrl" :username="auth.user?.username" :name="displayName" size="lg" /><div><h1>{{ displayName }} <small>{{ dataMode === 'api' ? '统一学习账号' : '高校认证' }}</small></h1><p>{{ dataMode === 'api' ? (auth.user?.email || '尚未登录') : userProfile.program }}</p><span>{{ communityProfile ? (communityProfile.bio || '还没有填写个人介绍。') : '正在读取社区资料…' }}</span><div class="hero-actions"><button class="button secondary small" type="button" @click="openEdit">编辑资料</button></div></div></div>
       <div class="profile-level"><div><strong>{{ dataMode === 'api' ? '等级 —' : `Lv.${userProfile.level}` }}</strong><span>{{ dataMode === 'api' ? '等级规则尚未配置' : '离下一等级还差 1200 经验值' }}</span></div><ProgressBar v-if="dataMode === 'mock'" :value="82" /><span v-else>等级进度 —</span><div class="profile-kpis"><span><strong>{{ dataMode === 'api' ? '—' : userProfile.streak }}</strong>连续学习/天</span><span><strong>{{ dataMode === 'api' ? '—' : `${userProfile.weeklyHours}h` }}</strong>本周学习</span><span><strong>{{ dataMode === 'api' ? (accountDataReady ? (store.serverGrowth?.points ?? 0) : '—') : userProfile.points }}</strong>成就点</span></div></div>
     </section>
     <section><div class="section-heading"><h2>学习总览</h2><RouterLink to="/assessments">学习数据详情 <AppIcon name="arrow-right" :size="15" /></RouterLink></div><p v-if="!accountDataReady" class="notice">{{ accountDataMessage }}</p><div class="stat-row six"><article v-for="[label, value] in overviewRows" :key="label"><strong>{{ value }}</strong><span>{{ label }}</span></article></div></section>
     <section v-if="dataMode === 'mock'"><div class="section-heading"><h2>我的 AI 能力卡</h2></div><div class="capability-layout"><div class="ability-profile-grid"><article v-for="[title, value, color] in abilities" :key="title"><span class="direction-icon"><AppIcon name="growth" :size="22" /></span><div><h3>{{ title }}</h3><small>Lv.{{ Math.ceil(Number(value) / 20) }} · 进阶者</small><div class="mini-progress"><i :style="{ width: `${value}%`, background: String(color) }" /></div></div></article></div><aside class="radar-card"><h3>综合能力雷达</h3><svg viewBox="0 0 220 200" role="img" aria-label="我的能力与同级平均能力雷达图"><polygon points="110,18 190,65 180,155 110,188 40,155 30,65" fill="none" stroke="#e6e2de" /><polygon points="110,52 160,79 152,134 109,157 64,134 60,80" fill="rgba(110,91,255,.08)" stroke="#6e5bff" stroke-width="2" stroke-dasharray="5 5" /><polygon points="110,42 168,75 160,140 108,165 57,138 53,75" fill="rgba(255,77,31,.18)" stroke="#ff4d1f" stroke-width="3" /><line v-for="point in ['110,18', '190,65', '180,155', '110,188', '40,155', '30,65']" :key="point" x1="110" y1="100" :x2="point.split(',')[0]" :y2="point.split(',')[1]" stroke="#eee" /></svg><div class="radar-legend"><span><i class="mine" />我的能力</span><span><i class="average" />同级平均</span></div><p>综合能力评级：<strong>进阶者</strong></p><span>超过本校 86% 的同学</span></aside></div></section>
-    <section><div class="section-heading"><h2>我的徽章墙</h2><button v-if="dataMode === 'mock'" class="text-link" type="button" @click="badgeOpen = '全部徽章'">查看全部（{{ badges.length }}）<AppIcon name="arrow-right" :size="15" /></button></div><div v-if="dataMode === 'mock'" class="badge-wall"><button v-for="badge in badges" :key="badge.title" type="button" :class="{ locked: !badge.unlocked }" @click="badgeOpen = badge.title"><span><AppIcon :name="badge.icon" :size="32" /></span><strong>{{ badge.title }}</strong><small>{{ badge.unlocked ? '已获得' : '保持学习解锁' }}</small></button></div><p v-else-if="accountDataReady" class="notice">服务端已记录 {{ store.serverGrowth?.achievements ?? 0 }} 枚成就、{{ store.serverGrowth?.certificates ?? 0 }} 份证书。</p><p v-else class="notice">{{ accountDataMessage }}</p></section>
+    <section><div class="section-heading"><h2>我的徽章墙</h2><div class="section-heading-side"><span class="badge-counter" role="status">已获得 {{ unlockedCount }} / {{ badges.length }} 枚</span><button v-if="dataMode === 'mock'" class="text-link" type="button" @click="badgeOpen = '全部徽章'">查看全部（{{ badges.length }}）<AppIcon name="arrow-right" :size="15" /></button></div></div><div v-if="badges.length" class="badge-wall"><button v-for="badge in badges" :key="badge.key" type="button" :class="{ locked: !badge.unlocked }" @click="badgeOpen = badge.key"><span class="badge-medal" :class="badge.tier.cover"><i class="badge-medal-core"><AppIcon :name="badge.icon" :size="30" :style="{ color: badge.tier.color }" /></i><em class="badge-flag" :class="{ 'is-lock': !badge.unlocked }"><AppIcon :name="badge.unlocked ? 'check' : 'lock'" :size="11" /></em></span><strong>{{ badge.title }}</strong><small>{{ badge.unlocked ? (badge.awardedAt ? `${formatBadgeDate(badge.awardedAt)} 获得` : '已获得') : lockedLabel(badge) }}</small></button></div><p v-else-if="accountDataReady" class="notice">{{ dataMode === 'api' ? '完成学习与实践目标后，成就徽章会在这里点亮。' : `服务端已记录 ${store.serverGrowth?.achievements ?? 0} 枚成就、${store.serverGrowth?.certificates ?? 0} 份证书。` }}</p><p v-else class="notice">{{ accountDataMessage }}</p></section>
     <div class="profile-two-column">
       <section><div class="section-heading"><h2>最近学习课程</h2><RouterLink to="/topics">全部课程 <AppIcon name="arrow-right" :size="15" /></RouterLink></div><p v-if="!accountDataReady" class="notice">{{ accountDataMessage }}</p><div v-else-if="recentCourses.length" class="record-list"><article v-for="course in recentCourses" :key="course.id"><CategoryCover class="record-cover" :title="course.title" :media="course" /><div><strong>{{ course.title }}</strong><small>{{ course.hours }} 小时 · {{ dataMode === 'api' ? '账号学习记录' : '本地学习记录' }}</small><ProgressBar :value="store.courseProgress[course.id] || 0" /></div><RouterLink class="button primary small" :to="`/courses/${course.id}`">继续学习</RouterLink></article></div><p v-else>暂无最近学习课程。</p></section>
       <section><div class="section-heading"><h2>实践记录</h2><RouterLink to="/labs">全部实验 <AppIcon name="arrow-right" :size="15" /></RouterLink></div><p v-if="!accountDataReady" class="notice">{{ accountDataMessage }}</p><div v-else-if="recentLabs.length" class="record-list"><article v-for="lab in recentLabs" :key="lab.id"><CategoryCover class="record-cover" :title="lab.title" :media="lab" /><div><strong>{{ lab.title }}</strong><small>完成度 {{ store.labProgress[lab.id] || 0 }}% · {{ dataMode === 'api' ? '账号实践记录' : '本地演示记录' }}</small><ProgressBar :value="store.labProgress[lab.id] || 0" /></div><RouterLink class="button primary small" :to="`/labs/${lab.id}`">进入实验</RouterLink></article></div><p v-else>暂无实践记录。</p></section>
@@ -113,7 +122,6 @@ onMounted(() => {
     </div>
     <section class="profile-cta"><div><h2>{{ dataMode === 'api' ? '继续完成已发布的学习与实训任务' : '继续积累你的 AI 能力！' }}</h2><p>每一次学习、每一次解决问题的积累，都在增长你的 AI 能力。</p><RouterLink class="button primary" to="/topics">探索更多课程</RouterLink></div><div v-if="dataMode === 'mock'" class="profile-kpis"><span><strong>18.6h</strong>本月学习时长</span><span><strong>7 个</strong>本月实验完成</span><span><strong>860 分</strong>本月成就点</span></div><div class="trophy"><AppIcon name="trophy" :size="52" /></div></section>
   </div>
-  <AppDialog v-model="editOpen" title="编辑资料"><form class="dialog-form" @submit.prevent="saveProfile"><label>昵称<input v-model="editName" required maxlength="20" autofocus /></label><label>个人介绍<textarea v-model="editBio" required rows="4" maxlength="120" /></label><button class="button primary" type="submit">保存到本地</button></form></AppDialog>
   <AppDialog v-model="planOpen" title="创建学习计划"><form class="dialog-form" @submit.prevent="createPlan"><label>计划名称<input v-model="planName" required maxlength="50" autofocus /></label><label>目标日期<input v-model="planDate" required type="date" /></label><div class="notice">{{ dataMode === 'api' ? '计划将写入学习账号，并在管理后台成长记录中可查。' : '演示计划只保存在浏览器本地。' }}</div><button class="button primary" type="submit">创建学习计划</button></form></AppDialog>
-  <AppDialog :model-value="!!badgeOpen" :title="badgeOpen || '徽章详情'" @update:model-value="badgeOpen = ''"><div class="badge-detail"><AppIcon :name="badges.find((badge) => badge.title === badgeOpen)?.icon || 'achievement'" :size="48" /></div><p>完成对应学习与实践目标后获得。当前徽章数据为演示内容。</p></AppDialog>
+  <AppDialog :model-value="!!badgeOpen" :title="activeBadge?.title || badgeOpen || '徽章详情'" @update:model-value="badgeOpen = ''"><template v-if="activeBadge"><div class="badge-detail" :class="activeBadge.tier.cover"><i class="badge-detail-core"><AppIcon :name="activeBadge.icon" :size="40" :style="{ color: activeBadge.tier.color }" /></i></div><div class="badge-detail-meta"><span class="badge-rarity" :style="{ background: activeBadge.tier.soft, color: activeBadge.tier.color }">{{ activeBadge.tier.label }}</span><p>{{ activeBadge.description || '完成对应学习与实践目标后获得。' }}</p><p v-if="activeBadge.unlocked && activeBadge.awardedAt">{{ formatBadgeDate(activeBadge.awardedAt) }} 获得</p><p v-else-if="activeBadge.progress && activeBadge.progress.target > activeBadge.progress.current">再完成 {{ activeBadge.progress.target - activeBadge.progress.current }} {{ growthProgressUnit(activeBadge.rule) }}解锁</p><small v-if="activeBadge.earnerCount !== undefined" class="muted">{{ activeBadge.earnerCount }} 位同学已获得</small></div></template><p v-else>完成对应学习与实践目标后获得。{{ dataMode === 'api' ? '' : '当前徽章数据为演示内容。' }}</p></AppDialog>
 </template>
