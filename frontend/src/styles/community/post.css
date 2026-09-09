@@ -67,3 +67,9 @@
 .question-state > span { background: var(--amc-yellow-soft); color: var(--amc-warning); font-size: 12px; border-radius: var(--amc-radius-xs); padding: 4px 7px; }
 .question-state > span.solved { background: var(--amc-green-soft); color: var(--amc-success); }
 .question-state small { color: var(--amc-text-secondary); font-size: 12px; }
+
+.community-export-btn { cursor: pointer; border: 0; min-height: 0; background: var(--amc-orange-soft); color: var(--amc-orange); font-size: 12px; line-height: 1.5; border-radius: var(--amc-radius-xs); padding: 3px 7px; white-space: nowrap; font-weight: 600; transition: background var(--amc-duration-control) var(--amc-ease), color var(--amc-duration-control) var(--amc-ease); }
+.community-export-btn:hover { background: var(--amc-orange); color: #ffffff; }
+.community-export-options { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.community-briefing-btn { cursor: pointer; border: 0; min-height: 0; background: var(--amc-orange-soft); color: var(--amc-orange); font-size: 12px; line-height: 1.5; border-radius: var(--amc-radius-xs); padding: 3px 7px; white-space: nowrap; font-weight: 600; transition: background var(--amc-duration-control) var(--amc-ease), color var(--amc-duration-control) var(--amc-ease); }
+.community-briefing-btn:hover { background: var(--amc-orange); color: #ffffff; }
