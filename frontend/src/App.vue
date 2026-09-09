@@ -8,6 +8,7 @@ import ImmersiveLabLayout from './layouts/ImmersiveLabLayout.vue'
 import PageState from './components/PageState.vue'
 import QuizBridgeDialog from './components/QuizBridgeDialog.vue'
 import AuthDialog from './components/AuthDialog.vue'
+import CommunityBriefingDialog from './components/CommunityBriefingDialog.vue'
 import CommunityComposer from './community/CommunityComposer.vue'
 import { AUTH_SESSION_CLEARED_EVENT, dataMode } from './services/api/client'
 import { useAuthStore } from './stores/auth'
@@ -91,9 +92,10 @@ onBeforeUnmount(() => {
       </PageState>
     </RouterView>
   </component>
-  <QuizBridgeDialog />
-  <AuthDialog />
-  <CommunityComposer v-if="auth.user" />
+<QuizBridgeDialog />
+<AuthDialog />
+<CommunityBriefingDialog v-if="auth.user" />
+<CommunityComposer v-if="auth.user" />
   <div v-if="bridgeMessage" class="toast" role="status">{{ bridgeMessage }}</div>
 </template>
 <style scoped>
