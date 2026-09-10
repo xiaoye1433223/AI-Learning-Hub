@@ -1,0 +1,2317 @@
+{
+  "batch": "ai-posts-01a08549",
+  "profiles": [
+    {
+      "id": "aix01-user-01",
+      "username": "aix_01",
+      "displayName": "显存不够用",
+      "bio": "社区演示账号｜偏爱安静的本地 AI 桌面",
+      "email": "aix01-1@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-02",
+      "username": "aix_02",
+      "displayName": "阿森的桌面",
+      "bio": "社区演示账号｜爱聊硬件，也关心日常体验",
+      "email": "aix01-2@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-03",
+      "username": "aix_03",
+      "displayName": "三木慢慢调",
+      "bio": "社区演示账号｜遇到参数先问使用场景",
+      "email": "aix01-3@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-04",
+      "username": "aix_04",
+      "displayName": "小岚听风",
+      "bio": "社区演示账号｜喜欢语音和多模态的小细节",
+      "email": "aix01-4@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-05",
+      "username": "aix_05",
+      "displayName": "猫爪工程师",
+      "bio": "社区演示账号｜习惯先看日志再改配置",
+      "email": "aix01-5@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-06",
+      "username": "aix_06",
+      "displayName": "北窗看云",
+      "bio": "社区演示账号｜研究端侧小设备的实际用途",
+      "email": "aix01-6@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-07",
+      "username": "aix_07",
+      "displayName": "半杯冰美式",
+      "bio": "社区演示账号｜把复杂问题说得简单一点",
+      "email": "aix01-7@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-08",
+      "username": "aix_08",
+      "displayName": "小周在排查",
+      "bio": "社区演示账号｜关注部署、备份和恢复",
+      "email": "aix01-8@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-09",
+      "username": "aix_09",
+      "displayName": "松果数据站",
+      "bio": "社区演示账号｜喜欢把数据和文档整理明白",
+      "email": "aix01-9@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-10",
+      "username": "aix_10",
+      "displayName": "云边小熊",
+      "bio": "社区演示账号｜在本地与云端之间寻找平衡",
+      "email": "aix01-10@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-11",
+      "username": "aix_11",
+      "displayName": "阿南画流程",
+      "bio": "社区演示账号｜先画流程，再聊智能助手",
+      "email": "aix01-11@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-12",
+      "username": "aix_12",
+      "displayName": "梨子敲键盘",
+      "bio": "社区演示账号｜喜欢给工具补上边界条件",
+      "email": "aix01-12@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-13",
+      "username": "aix_13",
+      "displayName": "橙子看图",
+      "bio": "社区演示账号｜关注生成图片和视觉表达",
+      "email": "aix01-13@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-14",
+      "username": "aix_14",
+      "displayName": "迟到的日志",
+      "bio": "社区演示账号｜问一句成功到底意味着什么",
+      "email": "aix01-14@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-15",
+      "username": "aix_15",
+      "displayName": "风扇转起来",
+      "bio": "社区演示账号｜关心工作站的噪声和散热",
+      "email": "aix01-15@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-16",
+      "username": "aix_16",
+      "displayName": "七号工具箱",
+      "bio": "社区演示账号｜少量工具，也想把任务做完整",
+      "email": "aix01-16@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-17",
+      "username": "aix_17",
+      "displayName": "麦粒聊产品",
+      "bio": "社区演示账号｜从使用者的日常任务出发",
+      "email": "aix01-17@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-18",
+      "username": "aix_18",
+      "displayName": "蓝莓不加糖",
+      "bio": "社区演示账号｜对 AI 创意工具保持好奇",
+      "email": "aix01-18@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-19",
+      "username": "aix_19",
+      "displayName": "北斗慢跑",
+      "bio": "社区演示账号｜关注模型的速度和可用性",
+      "email": "aix01-19@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-20",
+      "username": "aix_20",
+      "displayName": "一只提示词",
+      "bio": "社区演示账号｜收集提示词里真正有效的细节",
+      "email": "aix01-20@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-21",
+      "username": "aix_21",
+      "displayName": "木木做表格",
+      "bio": "社区演示账号｜喜欢能核对、能复现的小实验",
+      "email": "aix01-21@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-22",
+      "username": "aix_22",
+      "displayName": "路边观察员",
+      "bio": "社区演示账号｜观察新产品里的小体验",
+      "email": "aix01-22@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-23",
+      "username": "aix_23",
+      "displayName": "团子写方案",
+      "bio": "社区演示账号｜聊 AI 咨询、需求和交付",
+      "email": "aix01-23@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-24",
+      "username": "aix_24",
+      "displayName": "码头夜话",
+      "bio": "社区演示账号｜偏爱把技术聊成家常话",
+      "email": "aix01-24@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-25",
+      "username": "aix_25",
+      "displayName": "小林先验证",
+      "bio": "社区演示账号｜先写标准，再看结果",
+      "email": "aix01-25@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-26",
+      "username": "aix_26",
+      "displayName": "留白事务所",
+      "bio": "社区演示账号｜关注内容表达与清晰交接",
+      "email": "aix01-26@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-27",
+      "username": "aix_27",
+      "displayName": "纸飞机找资料",
+      "bio": "社区演示账号｜爱聊检索、资料和知识库",
+      "email": "aix01-27@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-28",
+      "username": "aix_28",
+      "displayName": "阿禾记一笔",
+      "bio": "社区演示账号｜把成本与维护一起记下来",
+      "email": "aix01-28@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-29",
+      "username": "aix_29",
+      "displayName": "周末折腾家",
+      "bio": "社区演示账号｜周末折腾，工作日求稳定",
+      "email": "aix01-29@accounts.invalid"
+    },
+    {
+      "id": "aix01-user-30",
+      "username": "aix_30",
+      "displayName": "红豆收尾中",
+      "bio": "社区演示账号｜关心任务完成后的最后一公里",
+      "email": "aix01-30@accounts.invalid"
+    }
+  ],
+  "posts": [
+    {
+      "id": "aix01-post-001",
+      "authorId": "aix01-user-01",
+      "title": "桌面小主机，真能当自己的 AI 服务器吗",
+      "body": "最吸引我的其实不是跑分，是随时打开就能问，而且桌面不用多一座机箱山。😂 想先拿文档整理和轻量聊天试水，等确实有高频需求再往上加配置。你们会先买机器，还是先把任务跑明白？",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "local-desk",
+      "replies": [
+        {
+          "id": "aix01-comment-1-1",
+          "authorId": "aix01-user-08",
+          "body": "先跑任务吧，不然最后容易变成一台很贵的下载机。"
+        },
+        {
+          "id": "aix01-comment-1-2",
+          "authorId": "aix01-user-01",
+          "body": "同意。想测的东西列成十条，带着清单挑机器舒服多了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-002",
+      "authorId": "aix01-user-02",
+      "title": "买推理显卡，先别只看那个型号",
+      "body": "同一张卡，跑什么模型、用多长上下文、几个人一起用，体验可能差不少。只晒型号然后问够不够，感觉像只报鞋码就问能不能跑马拉松。😂 先把任务和配置写全，讨论才有抓手。",
+      "postType": "frontier_discussion",
+      "category": "AI硬件",
+      "image": "gpu-bench",
+      "replies": [
+        {
+          "id": "aix01-comment-2-1",
+          "authorId": "aix01-user-09",
+          "body": "模型名字也要带量化版本，同名真不等于同一份文件。"
+        },
+        {
+          "id": "aix01-comment-2-2",
+          "authorId": "aix01-user-02",
+          "body": "再补一个输入长度，短问答和长文档完全两回事。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-003",
+      "authorId": "aix01-user-03",
+      "title": "模型文件能塞进去，为什么一聊天就紧张",
+      "body": "显存里不只有模型权重，聊天上下文和运行时也要住进去。把空间全算给模型，就像搬家只量床、不留走道。看部署配置时，我会给这些额外开销一起留余量。",
+      "postType": "note",
+      "category": "AI硬件",
+      "image": "memory",
+      "replies": [
+        {
+          "id": "aix01-comment-3-1",
+          "authorId": "aix01-user-10",
+          "body": "所以长聊天变慢时，先别急着怀疑模型突然变笨了。"
+        },
+        {
+          "id": "aix01-comment-3-2",
+          "authorId": "aix01-user-03",
+          "body": "没错，先看内存占用和是否有卸载，再判断是哪一段卡住。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-004",
+      "authorId": "aix01-user-04",
+      "title": "桌面小机器人，先让它把一件事做稳",
+      "body": "比起一口气加语音、视觉、抓取，我更想先看它能不能稳定完成一个小循环。比如识别目标、停下来、等下一条指令。动作少一点，调试时候快乐多一点。🤖",
+      "postType": "question",
+      "category": "AI硬件",
+      "image": "edge-robot",
+      "replies": [
+        {
+          "id": "aix01-comment-4-1",
+          "authorId": "aix01-user-11",
+          "body": "最好先有一个随时能按的停止按钮。"
+        },
+        {
+          "id": "aix01-comment-4-2",
+          "authorId": "aix01-user-04",
+          "body": "机器人不动的时候只是可爱，开始动以后就得讲边界了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-005",
+      "authorId": "aix01-user-05",
+      "title": "AI 眼镜，我先关心日常愿不愿意戴",
+      "body": "功能演示很吸引人，可重量、鼻托、续航和视野也会决定它能不能出门。对我来说，愿意连续戴比偶尔惊艳一下更重要。你们心里第一关是舒适还是功能？",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "voice-glasses",
+      "replies": [
+        {
+          "id": "aix01-comment-5-1",
+          "authorId": "aix01-user-12",
+          "body": "近视用户还得先过镜片这一关。"
+        },
+        {
+          "id": "aix01-comment-5-2",
+          "authorId": "aix01-user-05",
+          "body": "对，还有能不能自然收纳，不能每天出门再多一个大盒子。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-006",
+      "authorId": "aix01-user-06",
+      "title": "大模型服务跑起来以后，真正的日常才开始",
+      "body": "能回答第一句话很爽，但我更想补齐自动启动、日志位置、磁盘告警和失败恢复。否则它周一早上突然不理人，整个群都只能盯着那个转圈圈。部署清单里，你最容易漏哪一项？",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "server-ops",
+      "replies": [
+        {
+          "id": "aix01-comment-6-1",
+          "authorId": "aix01-user-13",
+          "body": "日志轮转。等磁盘满了才记起来，属于传统艺能。"
+        },
+        {
+          "id": "aix01-comment-6-2",
+          "authorId": "aix01-user-06",
+          "body": "还有负责人联系方式，出问题时别靠猜谁最懂。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-007",
+      "authorId": "aix01-user-07",
+      "title": "接口兼容，不代表所有行为都一样",
+      "body": "看到服务支持兼容接口很开心，接入成本可能小一些。但流式返回、工具调用、错误格式和模型参数，我还是会逐项试。网址能改通，只是第一步。",
+      "postType": "note",
+      "category": "大模型部署",
+      "image": "deployment",
+      "replies": [
+        {
+          "id": "aix01-comment-7-1",
+          "authorId": "aix01-user-14",
+          "body": "有些客户端连健康检查都假设了固定路径，挺容易漏。"
+        },
+        {
+          "id": "aix01-comment-7-2",
+          "authorId": "aix01-user-07",
+          "body": "拿实际客户端跑一轮，比只用一条请求命令更贴近日常。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-008",
+      "authorId": "aix01-user-08",
+      "title": "量化这件事，别只问能缩多小",
+      "body": "我更想看相同任务下，回答质量、速度和内存分别变了多少。缩小文件只是一个结果，不是全部结论。最好留一组自己熟悉的题，换版本就拿出来跑。",
+      "postType": "question",
+      "category": "大模型部署",
+      "image": "quantization",
+      "replies": [
+        {
+          "id": "aix01-comment-8-1",
+          "authorId": "aix01-user-15",
+          "body": "尤其是输出格式和代码任务，肉眼觉得差不多不一定够。"
+        },
+        {
+          "id": "aix01-comment-8-2",
+          "authorId": "aix01-user-08",
+          "body": "别忘了记录运行环境，不然第二次对比又从猜开始。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-009",
+      "authorId": "aix01-user-09",
+      "title": "第一句话快，和整段写得快，是两件事",
+      "body": "聊天时先冒出几个字会安心很多，批处理则可能更关心全部任务多久做完。看性能时我会把首字延迟、整段耗时和总吞吐拆开。不然同一个快字，聊着聊着就走岔了。",
+      "postType": "general",
+      "category": "大模型部署",
+      "image": "latency",
+      "replies": [
+        {
+          "id": "aix01-comment-9-1",
+          "authorId": "aix01-user-16",
+          "body": "再加上排队时间，用户感觉到的等待才完整。"
+        },
+        {
+          "id": "aix01-comment-9-2",
+          "authorId": "aix01-user-09",
+          "body": "对，模型端的成绩不一定就是页面上的体验。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-010",
+      "authorId": "aix01-user-10",
+      "title": "让 AI 写部署脚本，先给它什么",
+      "body": "我会先给目录结构、现有服务、不能动的数据和验收目标。否则一句帮我部署，它很可能认真地搭出另一套世界。上下文给准，少一些惊喜也挺好的。🐈",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "coding",
+      "replies": [
+        {
+          "id": "aix01-comment-10-1",
+          "authorId": "aix01-user-17",
+          "body": "尤其是已有数据库，明确说增量，不要重置。"
+        },
+        {
+          "id": "aix01-comment-10-2",
+          "authorId": "aix01-user-10",
+          "body": "还有哪里放上传文件，别让临时容器替你保管家当。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-011",
+      "authorId": "aix01-user-11",
+      "title": "多模态助手，能不能先看懂我的桌面",
+      "body": "比起问它“图里有什么”，我更想试试“这张截图里下一步该点哪里”。能认出按钮不等于理解当前任务，最好还能说清楚依据。大家会先拿报错截图、表格，还是实物照片来试？",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "multimodal",
+      "replies": [
+        {
+          "id": "aix01-comment-11-1",
+          "authorId": "aix01-user-18",
+          "body": "报错截图很适合，但别忘了遮掉账号和密钥。"
+        },
+        {
+          "id": "aix01-comment-11-2",
+          "authorId": "aix01-user-11",
+          "body": "对，我会留住报错和上下文，把与问题无关的信息裁掉。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-012",
+      "authorId": "aix01-user-12",
+      "title": "Agent 的第一项技能，我投给会停下来",
+      "body": "能连续执行一串步骤很酷，但碰到信息缺失、工具报错和权限不够时，知道何时停下来也很关键。我的理想助手会把卡点说具体：缺哪一项、已经完成什么、下一步需要谁处理。别只留一句失败了。",
+      "postType": "question",
+      "category": "AI应用",
+      "image": "agents",
+      "replies": [
+        {
+          "id": "aix01-comment-12-1",
+          "authorId": "aix01-user-19",
+          "body": "再加一条：别把同一个失败动作一直重试。"
+        },
+        {
+          "id": "aix01-comment-12-2",
+          "authorId": "aix01-user-12",
+          "body": "赞同，重试得有理由，状态没变化就该换办法。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-013",
+      "authorId": "aix01-user-13",
+      "title": "知识库没答对，先别急着换大模型",
+      "body": "我会先查它到底找到了哪几段材料。原文不存在、召回没找到、找到但读错，这三种情况处理方式完全不同。能展示检索片段和文档日期的界面，对排错太友好了。有人也喜欢先看检索结果吗？",
+      "postType": "general",
+      "category": "AI应用",
+      "image": "rag",
+      "replies": [
+        {
+          "id": "aix01-comment-13-1",
+          "authorId": "aix01-user-20",
+          "body": "尤其是同名文档多个版本，老答案看起来也很合理。"
+        },
+        {
+          "id": "aix01-comment-13-2",
+          "authorId": "aix01-user-13",
+          "body": "对，我想在引用旁边直接看到生效日期和版本。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-014",
+      "authorId": "aix01-user-14",
+      "title": "AI 出图前，先找准这张图要干什么",
+      "body": "是解释概念、做产品氛围图，还是当配图引出讨论？目标不同，我写的描述也会不同。最近更想少写一串“高级、震撼”，多交代主体、场景、构图和留白位置。大家写图像需求时最先确定哪一项？",
+      "postType": "frontier_discussion",
+      "category": "AI应用",
+      "image": "creative",
+      "replies": [
+        {
+          "id": "aix01-comment-14-1",
+          "authorId": "aix01-user-21",
+          "body": "我先确定放在哪里，横图竖图会影响构图。"
+        },
+        {
+          "id": "aix01-comment-14-2",
+          "authorId": "aix01-user-14",
+          "body": "对，后期硬裁很容易把真正想看的东西裁掉。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-015",
+      "authorId": "aix01-user-15",
+      "title": "选模型，我想先攒一小盒真实问题",
+      "body": "通用榜单可以看，最终还是要跑自己的任务。十几条经常遇到的问题，覆盖正常输入、缺信息和容易出错的边界，已经能聊出很多东西。评分前先写好什么算过关，别看到喜欢的答案再改标准。",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "evaluation",
+      "replies": [
+        {
+          "id": "aix01-comment-15-1",
+          "authorId": "aix01-user-22",
+          "body": "把人工答案和判断理由也一起留着。"
+        },
+        {
+          "id": "aix01-comment-15-2",
+          "authorId": "aix01-user-15",
+          "body": "对，不然过一周再评，连自己都可能换标准。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-016",
+      "authorId": "aix01-user-16",
+      "title": "AI 咨询的第一场会，我想先听具体烦恼",
+      "body": "如果上来就选大模型，可能还不知道要解决什么。我更想听“每周哪件事最耗时间”“哪一步最容易返工”“现在是谁在做”。先把一个具体流程聊透，方案才有落点。抽象的降本增效太难验收了。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "consulting",
+      "replies": [
+        {
+          "id": "aix01-comment-16-1",
+          "authorId": "aix01-user-23",
+          "body": "最好让一线使用的人也坐在会议里。"
+        },
+        {
+          "id": "aix01-comment-16-2",
+          "authorId": "aix01-user-16",
+          "body": "对，管理者看到的流程和实际做事的流程可能有差别。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-017",
+      "authorId": "aix01-user-17",
+      "title": "第一期 AI 项目，范围小一点更好讨论",
+      "body": "先挑一个输入明确、结果能核对、有人负责的流程。做完能说清楚改善了什么，再决定下一步。一下把客服、销售、财务都装进同一个助手，感觉光定义验收就能开很多场会。",
+      "postType": "general",
+      "category": "AI咨询",
+      "image": "business-flow",
+      "replies": [
+        {
+          "id": "aix01-comment-17-1",
+          "authorId": "aix01-user-24",
+          "body": "小范围也得完整，不然只剩个漂亮入口。"
+        },
+        {
+          "id": "aix01-comment-17-2",
+          "authorId": "aix01-user-17",
+          "body": "对，至少让一类任务从输入到交付真正走通。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-018",
+      "authorId": "aix01-user-18",
+      "title": "AI 项目算成本，别只盯调用费",
+      "body": "调用费很好量化，但整理资料、接系统、评测、维护和人工复核也会占时间。我想做一张完整账单，再看哪部分能减少。便宜模型如果带来更多返工，最终也未必便宜。各位最容易漏算哪一项？",
+      "postType": "frontier_discussion",
+      "category": "AI咨询",
+      "image": "cost",
+      "replies": [
+        {
+          "id": "aix01-comment-18-1",
+          "authorId": "aix01-user-25",
+          "body": "我投资料清理，前期经常低估。"
+        },
+        {
+          "id": "aix01-comment-18-2",
+          "authorId": "aix01-user-18",
+          "body": "还有持续更新，知识库不是上传一次就可以放着不管。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-019",
+      "authorId": "aix01-user-19",
+      "title": "企业助手的权限，我想从最小范围开始",
+      "body": "先让它读完成当前任务必需的资料，再逐步确认需要哪些写入动作。部门之间原本就有边界，接了 AI 也不该自动消失。最好拿两个权限不同的账号实际试试，看看能不能读到不该读的内容。",
+      "postType": "note",
+      "category": "AI咨询",
+      "image": "privacy",
+      "replies": [
+        {
+          "id": "aix01-comment-19-1",
+          "authorId": "aix01-user-26",
+          "body": "检索结果也要按权限过滤，不能只在界面藏按钮。"
+        },
+        {
+          "id": "aix01-comment-19-2",
+          "authorId": "aix01-user-19",
+          "body": "还有下载链接和历史回答，别遗漏这些入口。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-020",
+      "authorId": "aix01-user-20",
+      "title": "AI 项目交付，别只交一个网址",
+      "body": "我想收到一份能接手的说明：谁管理账号、配置在哪里、资料怎么更新、异常怎么看、服务如何恢复。内容不用厚，但每条都能实际用。交付后换个人值班，仍然知道从哪里下手，才算交接清楚。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "handover",
+      "replies": [
+        {
+          "id": "aix01-comment-20-1",
+          "authorId": "aix01-user-27",
+          "body": "把依赖的外部服务也列一下，账号归属要明确。"
+        },
+        {
+          "id": "aix01-comment-20-2",
+          "authorId": "aix01-user-20",
+          "body": "对，到期、额度和联系人都别只存在某个人脑子里。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-021",
+      "authorId": "aix01-user-21",
+      "title": "本地 AI 的快乐，有一半来自不排队",
+      "body": "个人电脑上有个随叫随到的小模型，这种感觉有点像家里装了自己的咖啡机。不一定样样最强，但日常小活儿能顺手做完就挺香。你最想留在本地的任务是什么？",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "local-desk",
+      "replies": [
+        {
+          "id": "aix01-comment-21-1",
+          "authorId": "aix01-user-29",
+          "body": "我的第一名是草稿和私人笔记，至少不用每次纠结上传什么。"
+        },
+        {
+          "id": "aix01-comment-21-2",
+          "authorId": "aix01-user-21",
+          "body": "我选批量改文件名。听起来很朴素，但真的烦了好多年。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-022",
+      "authorId": "aix01-user-22",
+      "title": "双卡方案最想先搞清楚的事",
+      "body": "看到两张显卡并排确实很心动，但我会先确认软件怎么切模型、卡之间怎么通信，以及机箱到底装不装得下。别最后算力在纸上翻倍，插槽里先开始打架。",
+      "postType": "frontier_discussion",
+      "category": "AI硬件",
+      "image": "gpu-bench",
+      "replies": [
+        {
+          "id": "aix01-comment-22-1",
+          "authorId": "aix01-user-30",
+          "body": "电源接头和线材空间也得看，不能只量显卡长度。"
+        },
+        {
+          "id": "aix01-comment-22-2",
+          "authorId": "aix01-user-22",
+          "body": "还有主板插槽实际跑什么带宽，装之前问清楚省很多事。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-023",
+      "authorId": "aix01-user-23",
+      "title": "长上下文，真的需要一上来拉满吗",
+      "body": "能放很多内容当然很诱人，但不代表每个任务都值得把窗口开到最大。先问自己实际要塞多少，再看响应和内存。参数页很大，日常需求可能没那么大。",
+      "postType": "note",
+      "category": "AI硬件",
+      "image": "memory",
+      "replies": [
+        {
+          "id": "aix01-comment-23-1",
+          "authorId": "aix01-user-01",
+          "body": "我更关心放进去以后还能不能稳定找到那句话。"
+        },
+        {
+          "id": "aix01-comment-23-2",
+          "authorId": "aix01-user-23",
+          "body": "容量和查得准是两回事，最好拿自己的文档测。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-024",
+      "authorId": "aix01-user-24",
+      "title": "边缘 AI 最打动我的场景：断网也能用",
+      "body": "设备在本地完成一部分识别和响应，这点很适合网络不稳定的地方。但离线演示得真断开外网试试，别把已经缓存的结果当成全部能力。",
+      "postType": "question",
+      "category": "AI硬件",
+      "image": "edge-robot",
+      "replies": [
+        {
+          "id": "aix01-comment-24-1",
+          "authorId": "aix01-user-02",
+          "body": "还要试第一次启动就没网，那个场景更有代表性。"
+        },
+        {
+          "id": "aix01-comment-24-2",
+          "authorId": "aix01-user-24",
+          "body": "模型下载和日常推理是两件事，说明里分开写会清楚很多。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-025",
+      "authorId": "aix01-user-25",
+      "title": "语音 AI 的体验，藏在被打断的那一刻",
+      "body": "顺顺当当地问一句答一句很容易展示。更想看说到一半改口、打断它、环境有人聊天时会怎样。能听见和会对话之间，还有不少小细节。🎙️",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "voice-glasses",
+      "replies": [
+        {
+          "id": "aix01-comment-25-1",
+          "authorId": "aix01-user-03",
+          "body": "最怕我刚说等一下，它还在认真把上一段讲完。"
+        },
+        {
+          "id": "aix01-comment-25-2",
+          "authorId": "aix01-user-25",
+          "body": "还有它是不是分得清我在和旁边的人说话。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-026",
+      "authorId": "aix01-user-26",
+      "title": "模型下载目录，准备单独安个家",
+      "body": "几种精度、几份版本、再来一点缓存，磁盘很快就热闹起来。想按模型和版本整理清楚，清理前先查谁在用。别为了腾空间，把正在服务的那份也一起端走。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "server-ops",
+      "replies": [
+        {
+          "id": "aix01-comment-26-1",
+          "authorId": "aix01-user-04",
+          "body": "名字里带 old 不代表真没人用，亲切又危险。"
+        },
+        {
+          "id": "aix01-comment-26-2",
+          "authorId": "aix01-user-26",
+          "body": "先列引用再删，省得半夜重新下载。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-027",
+      "authorId": "aix01-user-27",
+      "title": "模型服务的地址，别顺手开到全网",
+      "body": "想给同事用，先把访问入口、鉴权和网络范围弄清楚。一个能回答问题的端口，也是一个会消耗资源的端口。共享之前先想好谁能进来、谁来管。",
+      "postType": "note",
+      "category": "大模型部署",
+      "image": "deployment",
+      "replies": [
+        {
+          "id": "aix01-comment-27-1",
+          "authorId": "aix01-user-05",
+          "body": "内网共享也建议做身份区分，出问题才知道从哪里查。"
+        },
+        {
+          "id": "aix01-comment-27-2",
+          "authorId": "aix01-user-27",
+          "body": "密码和令牌别塞进截图，晒部署最容易顺手漏这个。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-028",
+      "authorId": "aix01-user-28",
+      "title": "同一模型的量化版本太多，怎么挑",
+      "body": "我的顺序是先看框架是否支持，再看能不能装下，最后拿自己的任务比较。文件名里那一串精度标记很重要，但不想只凭标记就宣布谁一定最好。",
+      "postType": "question",
+      "category": "大模型部署",
+      "image": "quantization",
+      "replies": [
+        {
+          "id": "aix01-comment-28-1",
+          "authorId": "aix01-user-06",
+          "body": "模型卡和量化说明也要看，别只看下载量。"
+        },
+        {
+          "id": "aix01-comment-28-2",
+          "authorId": "aix01-user-28",
+          "body": "能复现的任务结果，比一句无损更有说服力。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-029",
+      "authorId": "aix01-user-29",
+      "title": "并发一上来，单人体验会怎样",
+      "body": "一个人提问很流畅，十个人同时进来，排队和资源争用就值得看了。准备按实际人数逐步加请求，记录最慢那部分体验，而不是只盯平均值。",
+      "postType": "general",
+      "category": "大模型部署",
+      "image": "latency",
+      "replies": [
+        {
+          "id": "aix01-comment-29-1",
+          "authorId": "aix01-user-07",
+          "body": "平均很容易把少数特别慢的请求藏起来。"
+        },
+        {
+          "id": "aix01-comment-29-2",
+          "authorId": "aix01-user-29",
+          "body": "同时记失败和取消，不然成功率差了还可能看起来很快。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-030",
+      "authorId": "aix01-user-30",
+      "title": "AI 写完脚本说成功，我还想自己看一眼",
+      "body": "退出码、服务健康、真实页面、数据有没有保存，各看一项。脚本没报错是证据，但不是全部证据。最怕流程一路绿灯，打开页面却发现内容还在旧版本。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "coding",
+      "replies": [
+        {
+          "id": "aix01-comment-30-1",
+          "authorId": "aix01-user-08",
+          "body": "静态资源和接口版本也要对上。"
+        },
+        {
+          "id": "aix01-comment-30-2",
+          "authorId": "aix01-user-30",
+          "body": "再换个新会话读一次，缓存问题就容易露出来。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-031",
+      "authorId": "aix01-user-01",
+      "title": "同一张图，换个问题，答案就变了",
+      "body": "给 AI 看图片时，我准备把问题写得更具体：找异常、读文字、比差异，还是判断关系？一句“分析一下”有时反而把重点藏起来了。图里字太小的话，也别让它凭感觉补全，直接说看不清更好。",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "multimodal",
+      "replies": [
+        {
+          "id": "aix01-comment-31-1",
+          "authorId": "aix01-user-09",
+          "body": "可以先让它描述看到的内容，再做判断。"
+        },
+        {
+          "id": "aix01-comment-31-2",
+          "authorId": "aix01-user-01",
+          "body": "这个顺序不错，至少能发现是不是一开始就看错了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-032",
+      "authorId": "aix01-user-02",
+      "title": "工作流还是 Agent，先看路径会不会变",
+      "body": "如果每天都按固定几步做，我更愿意先画清工作流。要根据中间结果临时选路、找资料、调用不同工具，再考虑加 Agent。名字听起来高级不是验收指标，能否稳定完成任务才是。",
+      "postType": "question",
+      "category": "AI应用",
+      "image": "agents",
+      "replies": [
+        {
+          "id": "aix01-comment-32-1",
+          "authorId": "aix01-user-10",
+          "body": "固定流程里也可以只给一个环节加模型。"
+        },
+        {
+          "id": "aix01-comment-32-2",
+          "authorId": "aix01-user-02",
+          "body": "这个挺实用，先看看真正需要判断的是哪一步。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-033",
+      "authorId": "aix01-user-03",
+      "title": "给知识库喂文件，整理工作绕不过去",
+      "body": "如果目录里一堆“最终版”“最终版2”“真的最终版”，我不太敢直接全丢进去。先定哪些有效、谁负责维护、旧版本怎么退出，后面回答才有稳定依据。整理资料有点无聊，但感觉是关键工序。",
+      "postType": "general",
+      "category": "AI应用",
+      "image": "rag",
+      "replies": [
+        {
+          "id": "aix01-comment-33-1",
+          "authorId": "aix01-user-11",
+          "body": "重复内容还会让检索结果挤满同一件事。"
+        },
+        {
+          "id": "aix01-comment-33-2",
+          "authorId": "aix01-user-03",
+          "body": "没错，文件数量涨了，信息量未必跟着涨。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-034",
+      "authorId": "aix01-user-04",
+      "title": "让 AI 改稿，别只说“再自然一点”",
+      "body": "我想把修改意见拆得更具体：句子短些、删掉空泛形容词、保留关键数字、像同事解释事情。给一个喜欢和不喜欢的例子，也比反复说“像人写的”更有方向。你们最常删掉哪种句子？",
+      "postType": "frontier_discussion",
+      "category": "AI应用",
+      "image": "creative",
+      "replies": [
+        {
+          "id": "aix01-comment-34-1",
+          "authorId": "aix01-user-12",
+          "body": "没有信息量的开场白，我一般第一轮就删。"
+        },
+        {
+          "id": "aix01-comment-34-2",
+          "authorId": "aix01-user-04",
+          "body": "还有每段都要升华一下，读着像一直没进入正题。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-035",
+      "authorId": "aix01-user-05",
+      "title": "模型回答很像样，和回答正确要分开看",
+      "body": "结构完整、语气肯定、术语齐全，都不直接等于内容可靠。我会专门挑能核对的事实、计算步骤和引用检查。表达分和正确性分开打，才不容易被一篇漂亮文章带着走。",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "evaluation",
+      "replies": [
+        {
+          "id": "aix01-comment-35-1",
+          "authorId": "aix01-user-13",
+          "body": "有时候短答案反而更容易发现关键错误。"
+        },
+        {
+          "id": "aix01-comment-35-2",
+          "authorId": "aix01-user-05",
+          "body": "长文里每句话都顺，整体逻辑断掉的情况也得看。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-036",
+      "authorId": "aix01-user-06",
+      "title": "需求里写“做个智能助手”，我还会追问这些",
+      "body": "谁来用、处理什么输入、交付什么结果、哪些事情不能做、做不好时交给谁？这几项写明白，才知道助手应该长什么样。不是问得越多越专业，而是别把关键空白留到上线那天。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "consulting",
+      "replies": [
+        {
+          "id": "aix01-comment-36-1",
+          "authorId": "aix01-user-14",
+          "body": "我会再补一个：用户从哪里打开它。"
+        },
+        {
+          "id": "aix01-comment-36-2",
+          "authorId": "aix01-user-06",
+          "body": "好问题，入口离日常工具太远，再好用也可能被忘掉。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-037",
+      "authorId": "aix01-user-07",
+      "title": "流程自动化之前，先把例外摆上桌",
+      "body": "正常流程画三步，异常情况可能占半本手册。缺附件、超权限、客户临时改要求，这些都想提前挑几个来讨论。不是第一期必须全自动，而是要知道哪些情况转人工，怎么转。",
+      "postType": "general",
+      "category": "AI咨询",
+      "image": "business-flow",
+      "replies": [
+        {
+          "id": "aix01-comment-37-1",
+          "authorId": "aix01-user-15",
+          "body": "人工接手时要带上前面的处理记录。"
+        },
+        {
+          "id": "aix01-comment-37-2",
+          "authorId": "aix01-user-07",
+          "body": "不然用户又得从头说一遍，自动化反倒多了一道手续。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-038",
+      "authorId": "aix01-user-08",
+      "title": "把 AI 接进流程以后，省下的时间去哪了",
+      "body": "我想把原来的步骤和现在的步骤都记一下。生成快了，但复核多了多久？处理更多任务了，还是把时间用去做别的事了？这些问题说清楚，才知道效率提升具体发生在哪里。别只看那几秒生成动画。",
+      "postType": "frontier_discussion",
+      "category": "AI咨询",
+      "image": "cost",
+      "replies": [
+        {
+          "id": "aix01-comment-38-1",
+          "authorId": "aix01-user-16",
+          "body": "有些价值是减少等待，不一定减少操作时长。"
+        },
+        {
+          "id": "aix01-comment-38-2",
+          "authorId": "aix01-user-08",
+          "body": "这个角度好，跨部门来回确认的时间也可以单独记。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-039",
+      "authorId": "aix01-user-09",
+      "title": "让 AI 发消息之前，多一个确认界面",
+      "body": "拟稿、选择收件人、正式发送，我更愿意拆成几个清楚的步骤。尤其群发、对外回复和带附件的消息，确认界面应该能看见最终内容。让人知道点下去会发生什么，比事后找撤回按钮踏实。",
+      "postType": "note",
+      "category": "AI咨询",
+      "image": "privacy",
+      "replies": [
+        {
+          "id": "aix01-comment-39-1",
+          "authorId": "aix01-user-17",
+          "body": "附件名单和收件人别折叠得太深。"
+        },
+        {
+          "id": "aix01-comment-39-2",
+          "authorId": "aix01-user-09",
+          "body": "是的，这两项可能比正文里的错别字影响更大。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-040",
+      "authorId": "aix01-user-10",
+      "title": "知识库维护，最好有一个明确的主人",
+      "body": "资料过期的时候谁来改，新规则谁确认，争议答案谁处理？这些问题如果没有负责人，助手会越用越让人不放心。我想给每类资料指定维护角色，让反馈能够找到去处。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "handover",
+      "replies": [
+        {
+          "id": "aix01-comment-40-1",
+          "authorId": "aix01-user-18",
+          "body": "也可以给重要文档设置复核日期。"
+        },
+        {
+          "id": "aix01-comment-40-2",
+          "authorId": "aix01-user-10",
+          "body": "这个不错，至少能主动发现长期没人检查的内容。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-041",
+      "authorId": "aix01-user-11",
+      "title": "别急着给桌面 AI 主机加满配置",
+      "body": "想象了一下：模型还没选好，内存先买满，散热也堆满，最后主要拿来聊天。钱包表示它有话说。🤣 我更想先确定每天要处理什么，再决定哪里值得花钱。",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "local-desk",
+      "replies": [
+        {
+          "id": "aix01-comment-41-1",
+          "authorId": "aix01-user-20",
+          "body": "还得看摆放位置，小桌子真的装不下所有理想。"
+        },
+        {
+          "id": "aix01-comment-41-2",
+          "authorId": "aix01-user-11",
+          "body": "还有噪声！贴着耳朵的机器，安静比灯效实在。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-042",
+      "authorId": "aix01-user-12",
+      "title": "AI 工作站的预算，给散热留个位置",
+      "body": "显卡很抢眼，风道很安静地决定你能不能舒服地一直用。我的想法是预算里单独留出电源、机箱和散热这一栏，别等装完才发现桌边像开了小风机。",
+      "postType": "frontier_discussion",
+      "category": "AI硬件",
+      "image": "gpu-bench",
+      "replies": [
+        {
+          "id": "aix01-comment-42-1",
+          "authorId": "aix01-user-21",
+          "body": "我还会看低负载噪声，日常总不能一直戴耳机。"
+        },
+        {
+          "id": "aix01-comment-42-2",
+          "authorId": "aix01-user-12",
+          "body": "灰尘也挺现实的，容易清理比藏得漂亮更适合长期用。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-043",
+      "authorId": "aix01-user-13",
+      "title": "统一内存和独立显存，别直接一比一",
+      "body": "名字里都有内存，使用方式却不能只拿一个容量数字硬比较。还要看模型支持、内存带宽、系统占用和实际任务。配置表越看越热闹，最后还是得回到怎么用。",
+      "postType": "note",
+      "category": "AI硬件",
+      "image": "memory",
+      "replies": [
+        {
+          "id": "aix01-comment-43-1",
+          "authorId": "aix01-user-22",
+          "body": "系统和其他程序也要分这块空间，不能全当模型专属。"
+        },
+        {
+          "id": "aix01-comment-43-2",
+          "authorId": "aix01-user-13",
+          "body": "是的，边开浏览器边用模型才更像日常。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-044",
+      "authorId": "aix01-user-14",
+      "title": "给 AI 摄像头挑场景，别只挑好看的",
+      "body": "明亮、正面、无遮挡，谁都爱这样的演示。可实际桌面还有逆光、反光、歪着放的东西。想看一个完整点的测试集，把难看的输入也请进来。📷",
+      "postType": "question",
+      "category": "AI硬件",
+      "image": "edge-robot",
+      "replies": [
+        {
+          "id": "aix01-comment-44-1",
+          "authorId": "aix01-user-23",
+          "body": "还有夜里开一盏台灯，颜色和噪点全变了。"
+        },
+        {
+          "id": "aix01-comment-44-2",
+          "authorId": "aix01-user-14",
+          "body": "拿同一组场景重复测，进步还是退步才看得出来。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-045",
+      "authorId": "aix01-user-15",
+      "title": "录音小设备：别只看转写字数",
+      "body": "我会先检查文件能不能导出、说话人怎么区分、嘈杂时能不能回听定位。会议结束后，真正有用的是找到那句关键话，而不只是得到很长的一大段字。",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "voice-glasses",
+      "replies": [
+        {
+          "id": "aix01-comment-45-1",
+          "authorId": "aix01-user-24",
+          "body": "原音频和时间戳能对上，复核会省心很多。"
+        },
+        {
+          "id": "aix01-comment-45-2",
+          "authorId": "aix01-user-15",
+          "body": "对，错字可改，找不到原句才是真头疼。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-046",
+      "authorId": "aix01-user-16",
+      "title": "NAS 上放模型，存储和推理先分清",
+      "body": "我挺喜欢把大文件集中管理，但模型放在 NAS，不代表推理就一定跑在 NAS。下载、读取和计算是几段不同的路，讨论配置之前最好先画一下实际连接。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "server-ops",
+      "replies": [
+        {
+          "id": "aix01-comment-46-1",
+          "authorId": "aix01-user-25",
+          "body": "这个提醒好，很多人说部署在 NAS，其实指的不是同一件事。"
+        },
+        {
+          "id": "aix01-comment-46-2",
+          "authorId": "aix01-user-16",
+          "body": "还有首次加载速度和后续生成速度，也别混成一个结论。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-047",
+      "authorId": "aix01-user-17",
+      "title": "流式输出开了，为什么还是憋一整段",
+      "body": "模型可能已经一点点往外吐字，中间的代理却替它攒了一包。排查时我会从模型端、网关到浏览器逐段看。光调模型参数，有时真是在和错误的对象较劲。",
+      "postType": "note",
+      "category": "大模型部署",
+      "image": "deployment",
+      "replies": [
+        {
+          "id": "aix01-comment-47-1",
+          "authorId": "aix01-user-26",
+          "body": "还可以看第一段数据到客户端的时间，先确认卡在哪层。"
+        },
+        {
+          "id": "aix01-comment-47-2",
+          "authorId": "aix01-user-17",
+          "body": "流式是一整条链的表现，这句话值得贴在配置旁边。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-048",
+      "authorId": "aix01-user-18",
+      "title": "量化之后，长文任务也要再试一次",
+      "body": "短问题答得顺，不能替长文阅读背书。换了量化文件后，想把长输入、结构化输出和连续对话都过一下。省下的空间很开心，常用能力也得一起确认。",
+      "postType": "question",
+      "category": "大模型部署",
+      "image": "quantization",
+      "replies": [
+        {
+          "id": "aix01-comment-48-1",
+          "authorId": "aix01-user-27",
+          "body": "测试集里放一点容易混淆的细节，比较容易看出差别。"
+        },
+        {
+          "id": "aix01-comment-48-2",
+          "authorId": "aix01-user-18",
+          "body": "是的，别把所有题都选成两句话就能答完的。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-049",
+      "authorId": "aix01-user-19",
+      "title": "冷启动那一分钟，用户在想什么",
+      "body": "模型还在加载，页面只有一个无声的圆圈。换成明确的加载状态、预计步骤和可重试提示，体验就会好很多。不是所有等待都能消灭，但至少别让人以为按钮坏了。",
+      "postType": "general",
+      "category": "大模型部署",
+      "image": "latency",
+      "replies": [
+        {
+          "id": "aix01-comment-49-1",
+          "authorId": "aix01-user-28",
+          "body": "进度不准就别给假的百分比，显示当前阶段也很好。"
+        },
+        {
+          "id": "aix01-comment-49-2",
+          "authorId": "aix01-user-19",
+          "body": "还能告诉我关掉页面会不会丢任务，就更好了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-050",
+      "authorId": "aix01-user-20",
+      "title": "环境变量的问题，别靠重新粘贴解决",
+      "body": "变量名拼错、服务没重启、启动目录不同，都可能让配置没生效。准备先看程序实际读到了哪些键，敏感值只检查是否存在。别把整个配置文件倒进群里。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "coding",
+      "replies": [
+        {
+          "id": "aix01-comment-50-1",
+          "authorId": "aix01-user-29",
+          "body": "日志里也一样，别为调试把密钥完整打出来。"
+        },
+        {
+          "id": "aix01-comment-50-2",
+          "authorId": "aix01-user-20",
+          "body": "配置检查最好输出字段名和状态，够判断就行。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-051",
+      "authorId": "aix01-user-21",
+      "title": "语音、图片、文字，哪个入口最顺手",
+      "body": "我对多模态的期待挺朴素：手上拿着东西就说话，遇到复杂界面就截图，精确数字还是打字。入口越多越好看，但切换顺不顺才决定愿不愿意天天用。最好一段任务不用从头解释三遍。",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "multimodal",
+      "replies": [
+        {
+          "id": "aix01-comment-51-1",
+          "authorId": "aix01-user-30",
+          "body": "最怕从语音切文字以后，上下文突然失忆。"
+        },
+        {
+          "id": "aix01-comment-51-2",
+          "authorId": "aix01-user-21",
+          "body": "还有附件对应不上，聊了半天才发现它看的不是那张图。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-052",
+      "authorId": "aix01-user-22",
+      "title": "给 Agent 一把工具，先写清楚边界",
+      "body": "我想把工具说明写得像交接单：它能读什么、能改什么、输入缺了怎么办、成功怎么确认。工具数量先少一点也没关系。每把工具都模糊地写一句“处理业务”，感觉后面排错会很精彩。",
+      "postType": "question",
+      "category": "AI应用",
+      "image": "agents",
+      "replies": [
+        {
+          "id": "aix01-comment-52-1",
+          "authorId": "aix01-user-01",
+          "body": "最好把只读工具和写入工具分开看权限。"
+        },
+        {
+          "id": "aix01-comment-52-2",
+          "authorId": "aix01-user-22",
+          "body": "还有返回结果的含义，提交成功和处理成功可能不是同一件事。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-053",
+      "authorId": "aix01-user-23",
+      "title": "RAG 回答里，我想看到一个明确的“不知道”",
+      "body": "知识库里没有的规则，就别把常识拼成公司制度。能说“当前资料没有覆盖”，再给出缺少的材料类型，比顺滑地答错更有帮助。尤其是权限、报价和流程例外，不能凭语气把答案说满。",
+      "postType": "general",
+      "category": "AI应用",
+      "image": "rag",
+      "replies": [
+        {
+          "id": "aix01-comment-53-1",
+          "authorId": "aix01-user-02",
+          "body": "可以把补充资料的入口放在旁边。"
+        },
+        {
+          "id": "aix01-comment-53-2",
+          "authorId": "aix01-user-23",
+          "body": "这样问题还能变成资料维护清单，不会每次都重复踩坑。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-054",
+      "authorId": "aix01-user-24",
+      "title": "生成图里的小字，最好单独检查一遍",
+      "body": "大画面看着很漂亮，放大才发现标签有错别字，或者按钮根本读不出来。我会把文字准确性和画面质量分开验收。需要精确信息的海报，先做好画面，再用排版工具放正文，会更容易掌控。",
+      "postType": "frontier_discussion",
+      "category": "AI应用",
+      "image": "creative",
+      "replies": [
+        {
+          "id": "aix01-comment-54-1",
+          "authorId": "aix01-user-03",
+          "body": "数字和单位也一样，一眼顺过去很容易漏。"
+        },
+        {
+          "id": "aix01-comment-54-2",
+          "authorId": "aix01-user-24",
+          "body": "是的，尤其二维码不能当装饰看，得实际扫一下。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-055",
+      "authorId": "aix01-user-25",
+      "title": "评测里放一点让模型为难的问题",
+      "body": "不是故意刁难，我想知道输入不完整、条件互相冲突、资料找不到时它怎么处理。会问澄清问题、会标出假设、会拒绝乱猜，这些表现也值得记分。真实任务可不会每次都给标准题面。",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "evaluation",
+      "replies": [
+        {
+          "id": "aix01-comment-55-1",
+          "authorId": "aix01-user-04",
+          "body": "还有用户临时改需求，看它能不能接住。"
+        },
+        {
+          "id": "aix01-comment-55-2",
+          "authorId": "aix01-user-25",
+          "body": "这个很像日常工作，之前的约束不能说忘就忘。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-056",
+      "authorId": "aix01-user-26",
+      "title": "咨询方案讲完，我最想看到一张流程图",
+      "body": "输入从哪来，经过哪些处理，谁来确认，结果到哪里，一张简明流程图通常比满屏术语好讨论。图里有一个环节说不清，就继续聊那一格。流程理顺了，再决定哪些环节需要模型。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "consulting",
+      "replies": [
+        {
+          "id": "aix01-comment-56-1",
+          "authorId": "aix01-user-05",
+          "body": "最好标出现在已经有的系统，避免重复造一套。"
+        },
+        {
+          "id": "aix01-comment-56-2",
+          "authorId": "aix01-user-26",
+          "body": "还有系统之间是谁负责对接，别画根箭头就算完成。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-057",
+      "authorId": "aix01-user-27",
+      "title": "从试点到日常使用，中间还有什么",
+      "body": "除了模型回答得好，我会看账号权限、日志、失败提示、负责人和支持渠道。试点有人全程盯着，日常使用不一定有这个条件。把这些日常细节补齐，大家才知道出了问题怎么继续。",
+      "postType": "general",
+      "category": "AI咨询",
+      "image": "business-flow",
+      "replies": [
+        {
+          "id": "aix01-comment-57-1",
+          "authorId": "aix01-user-06",
+          "body": "培训也别只讲按钮，讲几个完整任务更容易懂。"
+        },
+        {
+          "id": "aix01-comment-57-2",
+          "authorId": "aix01-user-27",
+          "body": "赞同，用实际输入和最终结果演示，大家才知道该怎么提需求。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-058",
+      "authorId": "aix01-user-28",
+      "title": "本地部署和 API，先列相同的需求",
+      "body": "都按同样的任务量、上下文、可用时间和响应要求来比，才有讨论基础。本地有硬件和运维，API 有调用和接入管理；如果条件没对齐，比较结果很容易只是各说各话。",
+      "postType": "frontier_discussion",
+      "category": "AI咨询",
+      "image": "cost",
+      "replies": [
+        {
+          "id": "aix01-comment-58-1",
+          "authorId": "aix01-user-07",
+          "body": "高峰期和平均量也要分开。"
+        },
+        {
+          "id": "aix01-comment-58-2",
+          "authorId": "aix01-user-28",
+          "body": "对，平时闲着和忙时排队，都影响实际体验。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-059",
+      "authorId": "aix01-user-29",
+      "title": "资料里写着“忽略之前指令”，助手怎么办",
+      "body": "文档内容应该当资料读，不应该因此获得发邮件、改权限之类的执行权。我想把这种夹带指令的输入放进验收题集。能识别问题是一部分，更重要的是工具权限和确认边界真的起作用。",
+      "postType": "note",
+      "category": "AI咨询",
+      "image": "privacy",
+      "replies": [
+        {
+          "id": "aix01-comment-59-1",
+          "authorId": "aix01-user-08",
+          "body": "网页、邮件、附件都可能出现这种内容。"
+        },
+        {
+          "id": "aix01-comment-59-2",
+          "authorId": "aix01-user-29",
+          "body": "所以不能只处理聊天框，外部信息入口也得考虑。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-060",
+      "authorId": "aix01-user-30",
+      "title": "上线后的问题单，别只写“AI 不好用”",
+      "body": "当时输入是什么，期待什么，实际发生什么，能否重复，这几项越具体越容易修。界面上如果能一键附上相关执行记录，用户反馈成本也会低一点。当然记录里不该顺带暴露无关数据。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "handover",
+      "replies": [
+        {
+          "id": "aix01-comment-60-1",
+          "authorId": "aix01-user-09",
+          "body": "让用户选失败类型也有帮助，但别逼人填长表。"
+        },
+        {
+          "id": "aix01-comment-60-2",
+          "authorId": "aix01-user-30",
+          "body": "赞同，先收最关键的信息，需要时再补问。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-061",
+      "authorId": "aix01-user-01",
+      "title": "本地模型和云端模型，我想两边都留着",
+      "body": "有些活儿交给本地，有些难题再请云端帮忙，我觉得挺合理。真正需要想清楚的是：哪些内容可以出去、什么时候切换、失败时怎么办。选择题也可以选一个有边界的组合嘛。",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "local-desk",
+      "replies": [
+        {
+          "id": "aix01-comment-61-1",
+          "authorId": "aix01-user-11",
+          "body": "关键是别悄悄切云端，不然本地两个字容易让人误会。"
+        },
+        {
+          "id": "aix01-comment-61-2",
+          "authorId": "aix01-user-01",
+          "body": "对，能看见这次到底跑在哪儿，会安心很多。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-062",
+      "authorId": "aix01-user-02",
+      "title": "二手显卡这题，参数表答不完",
+      "body": "价格差看着很香，但我更想看退换条件、完整运行测试和实际状态。光一张能亮机的照片，离放心接回家还是有点远。大家挑二手硬件时最先看哪一项？",
+      "postType": "frontier_discussion",
+      "category": "AI硬件",
+      "image": "gpu-bench",
+      "replies": [
+        {
+          "id": "aix01-comment-62-1",
+          "authorId": "aix01-user-12",
+          "body": "能不能当场把目标任务跑一遍，比口头保证有用。"
+        },
+        {
+          "id": "aix01-comment-62-2",
+          "authorId": "aix01-user-02",
+          "body": "保修归属和序列号也要核清楚，别只盯着便宜。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-063",
+      "authorId": "aix01-user-03",
+      "title": "显存焦虑，能不能先换一个问法",
+      "body": "与其问多大才能一步到位，我更想问：哪些任务是必须在本地完成的？轻量分类、摘要、长文问答，需求差得挺远。把必需项挑出来，可能比继续追容量更解压。",
+      "postType": "note",
+      "category": "AI硬件",
+      "image": "memory",
+      "replies": [
+        {
+          "id": "aix01-comment-63-1",
+          "authorId": "aix01-user-13",
+          "body": "一步到位这四个字，通常对钱包不太友好。"
+        },
+        {
+          "id": "aix01-comment-63-2",
+          "authorId": "aix01-user-03",
+          "body": "而且需求会变，留升级空间有时比一次堆满更合适。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-064",
+      "authorId": "aix01-user-04",
+      "title": "机器人项目里，电池也是主角",
+      "body": "演示五分钟很兴奋，但我更想知道充电、待机、发热和连续运行怎么安排。算力只是设备的一部分，能顺畅过一天，才更接近想象中的搭子。",
+      "postType": "question",
+      "category": "AI硬件",
+      "image": "edge-robot",
+      "replies": [
+        {
+          "id": "aix01-comment-64-1",
+          "authorId": "aix01-user-14",
+          "body": "边充边用能不能做、充电线会不会影响运动，都得确认。"
+        },
+        {
+          "id": "aix01-comment-64-2",
+          "authorId": "aix01-user-04",
+          "body": "对，桌面视频里经常看不到电源那一半故事。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-065",
+      "authorId": "aix01-user-05",
+      "title": "AI 硬件送礼，我会先问一个问题",
+      "body": "对方现在有没有一个明确的烦恼？如果没有，功能再酷也可能三天后就进抽屉。想送语音设备、眼镜或者桌面助手的朋友，先聊需求比先看开箱稳。🎁",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "voice-glasses",
+      "replies": [
+        {
+          "id": "aix01-comment-65-1",
+          "authorId": "aix01-user-15",
+          "body": "送给爱折腾的人和送给只想省事的人，完全两种选法。"
+        },
+        {
+          "id": "aix01-comment-65-2",
+          "authorId": "aix01-user-05",
+          "body": "后续要不要帮忙配置也得算进礼物成本里。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-066",
+      "authorId": "aix01-user-06",
+      "title": "备份完成这四个字，我想再追问一句",
+      "body": "能不能在一份隔离环境里恢复出来？配置、模型版本、业务数据、上传文件，各自有没有对应上？真正让人踏实的，是恢复完还能打开入口并找到原来的内容。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "server-ops",
+      "replies": [
+        {
+          "id": "aix01-comment-66-1",
+          "authorId": "aix01-user-16",
+          "body": "只备数据库，图片落在另一个目录，也会漏。"
+        },
+        {
+          "id": "aix01-comment-66-2",
+          "authorId": "aix01-user-06",
+          "body": "恢复步骤最好让没参与部署的人照着走一次。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-067",
+      "authorId": "aix01-user-07",
+      "title": "给大模型服务留一个退路",
+      "body": "新版本先小范围跑自己的测试题，保留旧配置和回滚入口。不是怕升级，是不想升级失败时只能重新搜索怎么安装。能放心试新东西，前提是回得去。",
+      "postType": "note",
+      "category": "大模型部署",
+      "image": "deployment",
+      "replies": [
+        {
+          "id": "aix01-comment-67-1",
+          "authorId": "aix01-user-17",
+          "body": "模型版本和推理框架版本最好一起记，不然旧配置也可能跑不起来。"
+        },
+        {
+          "id": "aix01-comment-67-2",
+          "authorId": "aix01-user-07",
+          "body": "再保留一份真实请求样例，回滚后能马上复核。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-068",
+      "authorId": "aix01-user-08",
+      "title": "别让下载热情超过验证耐心",
+      "body": "新量化文件一出就想拉，硬盘越来越满，真正对比过的却没几个。准备做张小表：用过没、适合什么、哪里不行。收藏夹可以很大，常用列表还是小一点舒服。😂",
+      "postType": "question",
+      "category": "大模型部署",
+      "image": "quantization",
+      "replies": [
+        {
+          "id": "aix01-comment-68-1",
+          "authorId": "aix01-user-18",
+          "body": "每个版本留一句体验备注，比一个叫最终版的文件夹实用。"
+        },
+        {
+          "id": "aix01-comment-68-2",
+          "authorId": "aix01-user-08",
+          "body": "最终版后面再跟最终版2，故事就开始了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-069",
+      "authorId": "aix01-user-09",
+      "title": "长答案真的需要每次都写那么多吗",
+      "body": "有些问题只想要一个结论，模型却开始写小作文。除了调性能，我也想把输出要求讲清楚：结论几句、什么时候展开、哪里用列表。少写没用的话，也是在节省等待。",
+      "postType": "general",
+      "category": "大模型部署",
+      "image": "latency",
+      "replies": [
+        {
+          "id": "aix01-comment-69-1",
+          "authorId": "aix01-user-19",
+          "body": "但不能为了短把条件都删了，不然还得追问三轮。"
+        },
+        {
+          "id": "aix01-comment-69-2",
+          "authorId": "aix01-user-09",
+          "body": "对，要省的是重复，不是关键信息。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-070",
+      "authorId": "aix01-user-10",
+      "title": "配置文件里的 latest，让我有点不踏实",
+      "body": "试用时很方便，但交给别人长期跑，我更想固定可识别的版本并记下更新方式。否则同一句安装命令，下周可能已经装出另一套行为。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "coding",
+      "replies": [
+        {
+          "id": "aix01-comment-70-1",
+          "authorId": "aix01-user-20",
+          "body": "版本固定后还要留更新计划，不能永远停在那里。"
+        },
+        {
+          "id": "aix01-comment-70-2",
+          "authorId": "aix01-user-10",
+          "body": "对，固定是为了可追溯，不是为了拒绝升级。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-071",
+      "authorId": "aix01-user-11",
+      "title": "让 AI 读图表，先把单位找对",
+      "body": "看到一个上升趋势，先别急着让模型写结论。我会先核对横纵轴、单位、时间区间和有没有截断坐标。少看一个百分号，结论可能就完全跑偏。各位遇到过哪些看着专业、实际读错图的回答？",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "multimodal",
+      "replies": [
+        {
+          "id": "aix01-comment-71-1",
+          "authorId": "aix01-user-21",
+          "body": "双纵轴图是我的重点检查对象。"
+        },
+        {
+          "id": "aix01-comment-71-2",
+          "authorId": "aix01-user-11",
+          "body": "加一个图例颜色！有时候两条线认反了，整段话还挺流畅。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-072",
+      "authorId": "aix01-user-12",
+      "title": "Agent 执行记录，给人看也要看得懂",
+      "body": "比起一屏不停滚动的日志，我想看到任务目标、当前步骤、产物链接和失败原因。详细日志可以折叠，关键状态别藏起来。能让我半分钟接手剩下的工作，这个执行面板就算有用了。",
+      "postType": "question",
+      "category": "AI应用",
+      "image": "agents",
+      "replies": [
+        {
+          "id": "aix01-comment-72-1",
+          "authorId": "aix01-user-22",
+          "body": "同意，尤其是已经做了哪些外部修改。"
+        },
+        {
+          "id": "aix01-comment-72-2",
+          "authorId": "aix01-user-12",
+          "body": "对，恢复任务之前先知道现场发生了什么。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-073",
+      "authorId": "aix01-user-13",
+      "title": "文档切块，别把标题和正文切散了",
+      "body": "想到一个小实验：同一份说明书分别按固定长度、标题段落来切，再用真实问题比召回结果。没有一个数字能包打天下，表格和步骤列表也值得单独看。先让内容关系保留下来，可能比盲目调参数更值。",
+      "postType": "general",
+      "category": "AI应用",
+      "image": "rag",
+      "replies": [
+        {
+          "id": "aix01-comment-73-1",
+          "authorId": "aix01-user-23",
+          "body": "表格跨块后，列名丢了真的很难读。"
+        },
+        {
+          "id": "aix01-comment-73-2",
+          "authorId": "aix01-user-13",
+          "body": "还有“以下情况不适用”被切到另一块，意思直接反过来。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-074",
+      "authorId": "aix01-user-14",
+      "title": "AI 帮我起标题，我想要不同方向",
+      "body": "一次要十个近义词标题，对选择困难没什么帮助。我更想要三个明确方向：直接说问题、用场景切入、提出一个讨论点。然后再挑合适的语气。标题热闹可以，正文得接得住。",
+      "postType": "frontier_discussion",
+      "category": "AI应用",
+      "image": "creative",
+      "replies": [
+        {
+          "id": "aix01-comment-74-1",
+          "authorId": "aix01-user-24",
+          "body": "最后一句很重要，别让标题承诺超过内容。"
+        },
+        {
+          "id": "aix01-comment-74-2",
+          "authorId": "aix01-user-14",
+          "body": "同意，能准确吸引愿意聊这个话题的人就够了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-075",
+      "authorId": "aix01-user-15",
+      "title": "升级模型之前，旧题再跑一遍",
+      "body": "新版本可能更擅长某些任务，也可能改变输出格式和习惯。我会先用固定题集比较，再看速度、成本和边界表现。升级很期待，但保留回退路径也会让我更敢试。各位会固定留哪些题？",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "evaluation",
+      "replies": [
+        {
+          "id": "aix01-comment-75-1",
+          "authorId": "aix01-user-25",
+          "body": "结构化输出必须留，字段一变下游就可能出问题。"
+        },
+        {
+          "id": "aix01-comment-75-2",
+          "authorId": "aix01-user-15",
+          "body": "还有拒答和空结果，不能只测一路顺利的情况。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-076",
+      "authorId": "aix01-user-16",
+      "title": "给客户演示 AI，留一点不顺利的场景",
+      "body": "正常案例当然要展示，我也想演示一次资料缺失、一次工具失败、一次需要人工确认。真正投入使用后，这些情况迟早会出现。让人看到怎么恢复，比假装流程永远顺滑更容易建立合理预期。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "consulting",
+      "replies": [
+        {
+          "id": "aix01-comment-76-1",
+          "authorId": "aix01-user-26",
+          "body": "演示里能现场换输入会更有说服力。"
+        },
+        {
+          "id": "aix01-comment-76-2",
+          "authorId": "aix01-user-16",
+          "body": "可以，前提是明确哪些数据允许用，别临时翻真实客户资料。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-077",
+      "authorId": "aix01-user-17",
+      "title": "AI 项目的验收句子，能不能再具体一点",
+      "body": "“回答准确、运行稳定”听着没问题，但现场怎么判定？我更想写成：哪组问题、允许哪些误差、响应怎么看、失败怎么办。标准先约定，演示那天就能围着证据讨论，少一点各自理解。",
+      "postType": "general",
+      "category": "AI咨询",
+      "image": "business-flow",
+      "replies": [
+        {
+          "id": "aix01-comment-77-1",
+          "authorId": "aix01-user-27",
+          "body": "把不在本期范围里的内容也写清楚。"
+        },
+        {
+          "id": "aix01-comment-77-2",
+          "authorId": "aix01-user-17",
+          "body": "对，边界清楚才能判断是缺陷，还是下一期的新需求。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-078",
+      "authorId": "aix01-user-18",
+      "title": "AI 试点预算，我想留一块给评测",
+      "body": "能跑通只是开始，还得知道哪些问题经常错、什么输入会失败、改动后有没有退步。给评测留时间和负责人，后面每次优化才有依据。否则很容易每周演示都觉得更聪明，却说不出好在哪里。",
+      "postType": "frontier_discussion",
+      "category": "AI咨询",
+      "image": "cost",
+      "replies": [
+        {
+          "id": "aix01-comment-78-1",
+          "authorId": "aix01-user-28",
+          "body": "也需要业务同事参与，纯技术评分可能漏掉重点。"
+        },
+        {
+          "id": "aix01-comment-78-2",
+          "authorId": "aix01-user-18",
+          "body": "赞同，答案有没有用，最终还是得回到实际任务。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-079",
+      "authorId": "aix01-user-19",
+      "title": "日志要能排错，也别顺手收集一切",
+      "body": "我希望日志能说明请求失败在哪一步，但不必把整份内部文件、密钥和私人信息都复制进去。先确定需要什么证据、保留多久、谁能看，再设计日志字段。事后清理通常比一开始克制更麻烦。",
+      "postType": "note",
+      "category": "AI咨询",
+      "image": "privacy",
+      "replies": [
+        {
+          "id": "aix01-comment-79-1",
+          "authorId": "aix01-user-29",
+          "body": "调试模式也要能自动退出，别一直开着。"
+        },
+        {
+          "id": "aix01-comment-79-2",
+          "authorId": "aix01-user-19",
+          "body": "对，而且导出日志给别人排查前，最好有清晰的脱敏步骤。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-080",
+      "authorId": "aix01-user-20",
+      "title": "交接演练：让没参与开发的人操作一次",
+      "body": "按说明更新一份资料、处理一次失败、恢复一次配置，看看哪里会卡住。开发者自己觉得很自然的步骤，对接手的人可能完全没写清。我挺想把这个小演练放进交付流程。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "handover",
+      "replies": [
+        {
+          "id": "aix01-comment-80-1",
+          "authorId": "aix01-user-30",
+          "body": "最好让开发者先忍住别口头提示。"
+        },
+        {
+          "id": "aix01-comment-80-2",
+          "authorId": "aix01-user-20",
+          "body": "哈哈对，不然文档缺的步骤又被熟练工悄悄补上了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-081",
+      "authorId": "aix01-user-21",
+      "title": "我的理想 AI 桌面：少一点仪式感",
+      "body": "不是说装备不重要，是我真的不想每次用之前先开五个窗口。开机、打开入口、开始干活，最好就三步。有没有人和我一样，最后最看重的是日常能不能坚持用？",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "local-desk",
+      "replies": [
+        {
+          "id": "aix01-comment-81-1",
+          "authorId": "aix01-user-02",
+          "body": "启动时间和失败提示都是小事，但天天用就变成大事。"
+        },
+        {
+          "id": "aix01-comment-81-2",
+          "authorId": "aix01-user-21",
+          "body": "能保留上次会话、找得到文件，我已经愿意鼓掌了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-082",
+      "authorId": "aix01-user-22",
+      "title": "我希望每张跑分图都带上这张小纸条",
+      "body": "模型、精度、上下文、并发、输入输出长度、软件版本。少一个，讨论就容易各说各话。不是不爱看漂亮数字，是想知道这个数字和自己的任务有没有关系。📎",
+      "postType": "frontier_discussion",
+      "category": "AI硬件",
+      "image": "gpu-bench",
+      "replies": [
+        {
+          "id": "aix01-comment-82-1",
+          "authorId": "aix01-user-03",
+          "body": "再加冷启动还是热启动，差别经常藏在这里。"
+        },
+        {
+          "id": "aix01-comment-82-2",
+          "authorId": "aix01-user-22",
+          "body": "还有单用户速度还是总吞吐，别拿两种成绩互相打架。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-083",
+      "authorId": "aix01-user-23",
+      "title": "内存占用截图，我想看的是过程",
+      "body": "只给一张启动后的占用图，我还不知道聊天变长、连续请求进来时会怎样。更想看加载、首问、长会话和退出后的变化。时间线比一个静态数字更能讲清楚问题。",
+      "postType": "note",
+      "category": "AI硬件",
+      "image": "memory",
+      "replies": [
+        {
+          "id": "aix01-comment-83-1",
+          "authorId": "aix01-user-04",
+          "body": "退出后资源有没有释放也值得看，特别是同时切几个模型。"
+        },
+        {
+          "id": "aix01-comment-83-2",
+          "authorId": "aix01-user-23",
+          "body": "能把复现步骤写清楚，这张图就从晒图变成经验了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-084",
+      "authorId": "aix01-user-24",
+      "title": "AI 开发板的配件预算，真的别漏",
+      "body": "开发板本体只是开始，摄像头、电源、存储、散热、转接线，一个都可能影响最后体验。准备先列完整物料表，避免包裹到齐了才发现缺一根关键小线。",
+      "postType": "question",
+      "category": "AI硬件",
+      "image": "edge-robot",
+      "replies": [
+        {
+          "id": "aix01-comment-84-1",
+          "authorId": "aix01-user-05",
+          "body": "小线不贵，等快递很贵，尤其是周末已经空出来的时候。"
+        },
+        {
+          "id": "aix01-comment-84-2",
+          "authorId": "aix01-user-24",
+          "body": "哈哈，配件清单最后一项应该是耐心。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-085",
+      "authorId": "aix01-user-25",
+      "title": "实体按钮这件小事，我还挺偏爱",
+      "body": "语音设备上有个明确的静音按钮，状态看得见，操作摸得着，会让我更愿意把它放在桌上。不是所有交互都需要更聪明，有时候更确定就很好。",
+      "postType": "general",
+      "category": "AI硬件",
+      "image": "voice-glasses",
+      "replies": [
+        {
+          "id": "aix01-comment-85-1",
+          "authorId": "aix01-user-06",
+          "body": "物理遮挡摄像头也一样，感觉很直接。"
+        },
+        {
+          "id": "aix01-comment-85-2",
+          "authorId": "aix01-user-25",
+          "body": "能一眼看懂当前有没有在录，比藏在三级菜单里舒服。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-086",
+      "authorId": "aix01-user-26",
+      "title": "AI 服务监控，我先留这几个视角",
+      "body": "有没有请求、失败发生在哪、用户等了多久、资源还剩多少。四个问题先答清楚，比堆一墙仪表盘更有用。漂亮曲线看够了，我现在更想知道出问题时该去哪里找。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "server-ops",
+      "replies": [
+        {
+          "id": "aix01-comment-86-1",
+          "authorId": "aix01-user-07",
+          "body": "告警能指到具体服务和时间，排查会快很多。"
+        },
+        {
+          "id": "aix01-comment-86-2",
+          "authorId": "aix01-user-26",
+          "body": "最好还能关联请求记录，但别把私人输入原文全写进去。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-087",
+      "authorId": "aix01-user-27",
+      "title": "健康检查，也想要一点实际内容",
+      "body": "进程活着不一定代表模型可用。准备把基础存活和轻量业务检查分开：一个看服务，一个看能不能正常响应。别用户已经发了三次问号，监控还在满屏绿色。",
+      "postType": "note",
+      "category": "大模型部署",
+      "image": "deployment",
+      "replies": [
+        {
+          "id": "aix01-comment-87-1",
+          "authorId": "aix01-user-08",
+          "body": "模型加载中、暂时过载和真的坏了，状态最好也区分。"
+        },
+        {
+          "id": "aix01-comment-87-2",
+          "authorId": "aix01-user-27",
+          "body": "对，错误信息讲人话比单纯红灯更有帮助。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-088",
+      "authorId": "aix01-user-28",
+      "title": "模型大小和推理速度，先别画等号",
+      "body": "更小的文件不自动意味着你的机器上更快。实际效果还受后端实现、硬件和任务影响。准备每次只改一个变量，免得同时换模型、换框架，最后不知道是谁立功。",
+      "postType": "question",
+      "category": "大模型部署",
+      "image": "quantization",
+      "replies": [
+        {
+          "id": "aix01-comment-88-1",
+          "authorId": "aix01-user-09",
+          "body": "这个方法也能避免把缓存效果误当成版本进步。"
+        },
+        {
+          "id": "aix01-comment-88-2",
+          "authorId": "aix01-user-28",
+          "body": "一次一个变量虽然慢一点，但结论能带走。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-089",
+      "authorId": "aix01-user-29",
+      "title": "测速度时，我准备把请求也存下来",
+      "body": "模型、输入、输出上限、并发和运行版本放在一起，下一次才能公平比较。漂亮数字发出去很快，别人能复跑一次才更有意思。谁有简洁好用的记录表？",
+      "postType": "general",
+      "category": "大模型部署",
+      "image": "latency",
+      "replies": [
+        {
+          "id": "aix01-comment-89-1",
+          "authorId": "aix01-user-10",
+          "body": "请求里先去掉敏感信息，保留结构和长度就够很多测试用了。"
+        },
+        {
+          "id": "aix01-comment-89-2",
+          "authorId": "aix01-user-29",
+          "body": "再写清硬件和是否预热，这张表就完整不少。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-090",
+      "authorId": "aix01-user-30",
+      "title": "一个脚本能重跑，我才敢说省事",
+      "body": "第一次跑通挺开心，第二次不乱建、不覆盖、不重复导入，更像真正能用。尤其是账号和内容，想要的是补进去，不是每次把现场重新铺一遍。",
+      "postType": "frontier_discussion",
+      "category": "大模型部署",
+      "image": "coding",
+      "replies": [
+        {
+          "id": "aix01-comment-90-1",
+          "authorId": "aix01-user-11",
+          "body": "也要能清楚报告跳过了哪些、创建了哪些。"
+        },
+        {
+          "id": "aix01-comment-90-2",
+          "authorId": "aix01-user-30",
+          "body": "遇到不一致就停下来，比悄悄覆盖强多了。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-091",
+      "authorId": "aix01-user-01",
+      "title": "多模态的小惊喜：把说明书变成问答",
+      "body": "说明书太长的时候，我想拍下当前那页，直接问“这个灯一直闪是什么意思”。前提是型号和页面都看得清，回答还能指出对应位置。遇到电气安装之类的问题，我宁愿它提醒查原文，也别猜。",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "multimodal",
+      "replies": [
+        {
+          "id": "aix01-comment-91-1",
+          "authorId": "aix01-user-12",
+          "body": "这种用途比单纯描述照片更有动力去用。"
+        },
+        {
+          "id": "aix01-comment-91-2",
+          "authorId": "aix01-user-01",
+          "body": "而且原图要能随时展开，别只留一个无法核对的摘要。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-092",
+      "authorId": "aix01-user-02",
+      "title": "多 Agent 协作，先算一笔协调账",
+      "body": "多个助手一起忙看着很热闹，我会先确认任务能不能拆开、输出能不能合并。要是每个人都查同一份资料，再互相解释一遍背景，可能还不如一个人做完。大家会把哪类工作放心拆出去？",
+      "postType": "question",
+      "category": "AI应用",
+      "image": "agents",
+      "replies": [
+        {
+          "id": "aix01-comment-92-1",
+          "authorId": "aix01-user-13",
+          "body": "独立的资料核对和不同方案评审比较容易拆。"
+        },
+        {
+          "id": "aix01-comment-92-2",
+          "authorId": "aix01-user-02",
+          "body": "最后还是要有人负责整合，不能把三个答案拼起来就交差。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-093",
+      "authorId": "aix01-user-03",
+      "title": "知识库更新之后，旧答案会不会还在",
+      "body": "我会把更新当一条完整流程验收：原文改了、索引刷新了、旧内容退出了、缓存也处理了。只看到上传成功还不够。挑一条刚改过的规则问一下，往往比盯进度条更能说明问题。",
+      "postType": "general",
+      "category": "AI应用",
+      "image": "rag",
+      "replies": [
+        {
+          "id": "aix01-comment-93-1",
+          "authorId": "aix01-user-14",
+          "body": "删除文档也应该测，不能只测新增。"
+        },
+        {
+          "id": "aix01-comment-93-2",
+          "authorId": "aix01-user-03",
+          "body": "这个必须有，尤其是已经失效或需要撤回的材料。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-094",
+      "authorId": "aix01-user-04",
+      "title": "创意任务的提示词，也可以留修改记录",
+      "body": "初稿哪里好、哪里不合适、下一版只改什么，写清楚以后更容易复现方向。否则一连改五轮，可能已经忘了第一张为什么喜欢。我想给常用创意任务留个小版本表，不用很复杂。",
+      "postType": "frontier_discussion",
+      "category": "AI应用",
+      "image": "creative",
+      "replies": [
+        {
+          "id": "aix01-comment-94-1",
+          "authorId": "aix01-user-15",
+          "body": "保留被否决原因也有用，免得绕回来。"
+        },
+        {
+          "id": "aix01-comment-94-2",
+          "authorId": "aix01-user-04",
+          "body": "而且一次只改少数重点，更容易判断是哪项起作用。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-095",
+      "authorId": "aix01-user-05",
+      "title": "人工评价，别只留一个总分",
+      "body": "同样是七分，有的答案事实正确但冗长，有的是很简洁却漏掉关键条件。把扣分原因写一句，比一个平均数更能指导下一次修改。我想让评价表保持短，但至少知道问题出在哪里。",
+      "postType": "note",
+      "category": "AI应用",
+      "image": "evaluation",
+      "replies": [
+        {
+          "id": "aix01-comment-95-1",
+          "authorId": "aix01-user-16",
+          "body": "再记一下严重程度，小瑕疵和关键错误不能混着算。"
+        },
+        {
+          "id": "aix01-comment-95-2",
+          "authorId": "aix01-user-05",
+          "body": "赞同，尤其会影响后续操作的错误，得单独拎出来。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-096",
+      "authorId": "aix01-user-06",
+      "title": "好用的 AI 项目，是谁愿意每天打开它",
+      "body": "负责人觉得先进，和实际使用的人愿意用，是两回事。我会想找几位愿意反馈的用户，把他们一周里的使用场景看清楚。哪些结果直接用了，哪些改了很多，哪些看都没看，比一句满意更具体。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "consulting",
+      "replies": [
+        {
+          "id": "aix01-comment-96-1",
+          "authorId": "aix01-user-17",
+          "body": "别只统计登录次数，登录了也可能没完成任务。"
+        },
+        {
+          "id": "aix01-comment-96-2",
+          "authorId": "aix01-user-06",
+          "body": "对，我更关心任务有没有结束，以及结束后还剩多少人工工作。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-097",
+      "authorId": "aix01-user-07",
+      "title": "业务规则没定，先别让模型替大家拍板",
+      "body": "同一个问题，三个部门给三种口径，换个更强的模型也解决不了规则冲突。我会先把冲突整理出来，请有权负责的人确定。模型可以帮忙归纳差异，但不能代替业务负责人制定制度。",
+      "postType": "general",
+      "category": "AI咨询",
+      "image": "business-flow",
+      "replies": [
+        {
+          "id": "aix01-comment-97-1",
+          "authorId": "aix01-user-18",
+          "body": "还有规则生效时间，不同月份可能答案都对。"
+        },
+        {
+          "id": "aix01-comment-97-2",
+          "authorId": "aix01-user-07",
+          "body": "所以版本和日期得进资料结构，不能只留下结论。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-098",
+      "authorId": "aix01-user-08",
+      "title": "报一个 AI 项目价格之前，先把边界说完",
+      "body": "标准流程有多少，接几个系统，资料什么状态，谁做验收，交付后支持多久，这些都会改变工作量。我更接受分项说明和明确假设。只有一个总价，双方可能从第一天就在想不同的项目。",
+      "postType": "frontier_discussion",
+      "category": "AI咨询",
+      "image": "cost",
+      "replies": [
+        {
+          "id": "aix01-comment-98-1",
+          "authorId": "aix01-user-19",
+          "body": "变更怎么处理也最好提前说。"
+        },
+        {
+          "id": "aix01-comment-98-2",
+          "authorId": "aix01-user-08",
+          "body": "对，新增一个入口和重做一条业务流程，不能都叫小改一下。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-099",
+      "authorId": "aix01-user-09",
+      "title": "AI 助手的删除按钮，想看它删到哪里",
+      "body": "删除对话、删除文件、删除索引，可能是不同动作。我希望产品说明能讲清影响范围和处理状态。用户以为已经删除，系统其实只是不再显示，这种理解差异很容易埋雷。",
+      "postType": "note",
+      "category": "AI咨询",
+      "image": "privacy",
+      "replies": [
+        {
+          "id": "aix01-comment-99-1",
+          "authorId": "aix01-user-20",
+          "body": "如果需要排队处理，也应该告诉用户进度。"
+        },
+        {
+          "id": "aix01-comment-99-2",
+          "authorId": "aix01-user-09",
+          "body": "还有保留要求和例外，得按实际规则说明，不能写一个空泛的已删除。"
+        }
+      ]
+    },
+    {
+      "id": "aix01-post-100",
+      "authorId": "aix01-user-10",
+      "title": "AI 项目下一期做什么，想听真实反馈",
+      "body": "第一期跑起来之后，我更想看哪些任务常用、哪些经常转人工、哪些需求反复出现。下一期按这些证据排优先级，可能比追着每个新概念跑更合适。功能可以慢慢加，先把已经承诺的事情做好。",
+      "postType": "question",
+      "category": "AI咨询",
+      "image": "handover",
+      "replies": [
+        {
+          "id": "aix01-comment-100-1",
+          "authorId": "aix01-user-21",
+          "body": "把不用的功能也看看，可能是入口问题，也可能根本不需要。"
+        },
+        {
+          "id": "aix01-comment-100-2",
+          "authorId": "aix01-user-10",
+          "body": "同意，减掉一个让人困惑的功能，有时比加三个更有帮助。"
+        }
+      ]
+    }
+  ]
+}

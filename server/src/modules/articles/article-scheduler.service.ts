@@ -21,8 +21,8 @@ export class ArticleSchedulerService implements OnApplicationBootstrap, OnApplic
   private async publishDue() {
     try {
       await this.articles.publishScheduled()
-    } catch (error) {
-      this.logger.error('定时发布检查失败', error instanceof Error ? error.stack : String(error))
+    } catch {
+      this.logger.error('定时发布检查失败，请按任务时间核对数据库和发布条件')
     }
   }
 }

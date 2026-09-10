@@ -1,0 +1,19 @@
+[Unit]
+Description=校园社区独立主机监控与企业微信通知
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=oneshot
+User=aihub-monitor
+Group=aihub-monitor
+ExecStart=/usr/bin/python3 /opt/aihub-operations/monitor.py --config /etc/aihub-operations/monitor.json
+TimeoutStartSec=55s
+StateDirectory=aihub-monitor
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+MemoryMax=128M
+TasksMax=16

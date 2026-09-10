@@ -1,0 +1,7 @@
+{
+  "service_name": "校园学习社区",
+  "source_ssh_host": "aihub-monitor-source",
+  "monitor_state_directory": "/var/lib/aihub-monitor",
+  "wecom_secret_file": "/etc/aihub-operations/wecom-webhook",
+  "ready_urls": ["https://learn.example.edu/api/v1/health/ready", "https://admin.example.edu/api/v1/health/ready"]
+}

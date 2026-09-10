@@ -1,0 +1,10 @@
+{
+  "source_host": "campus-app.example.edu",
+  "source_fault_domain": "应用主机及其存储盘",
+  "repository_fault_domain": "待负责人核验并填写独立主机和存储盘",
+  "release": "待填写同次发布的源码摘要和镜像清单版本",
+  "stage_dir": "/stage",
+  "state_dir": "/state",
+  "media_root": "/uploads",
+  "config_files": ["/release/deploy/compose/docker-compose.yml", "/release/deploy/compose/.env", "/release/release-manifest.json"]
+}

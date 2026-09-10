@@ -49,7 +49,7 @@ describe('平台公共契约', () => {
       const context = {
         getHandler: () => handler,
         getClass: () => class TestController {},
-        switchToHttp: () => ({ getRequest: () => ({ user: { permissions } }) }),
+        switchToHttp: () => ({ getRequest: () => ({ user: { permissions, sessionClient: 'admin', mfaVerified: true } }) }),
       } as unknown as ExecutionContext
       return () => guard.canActivate(context)
     }

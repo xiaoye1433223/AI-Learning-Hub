@@ -1,0 +1,65 @@
+{
+  "说明": "这批为原创中文讨论稿。X 帖子仅提供选题线索，技术边界另用官方资料核对；没有逐帖转载他人原文或照片。正文不包含来源附注。",
+  "sources": [
+    {
+      "url": "https://x.com/vllm_project/status/2036986753651978362",
+      "topics": [
+        "本地推理服务",
+        "接口兼容",
+        "延迟"
+      ]
+    },
+    {
+      "url": "https://x.com/ollama/status/1929935933547094460",
+      "topics": [
+        "本地与云端协作"
+      ]
+    },
+    {
+      "url": "https://x.com/ollama/status/2041610283152797818",
+      "topics": [
+        "本地AI设备",
+        "统一内存"
+      ]
+    },
+    {
+      "url": "https://x.com/NVIDIAAIDev/status/1952871005249999128",
+      "topics": [
+        "模型服务部署"
+      ]
+    },
+    {
+      "url": "https://x.com/PiyuduttaPiyu/status/2037880060439339156",
+      "topics": [
+        "需求梳理",
+        "资料整理",
+        "AI咨询"
+      ]
+    },
+    {
+      "url": "https://x.com/pacecom/status/1996574994671755383",
+      "topics": [
+        "试点到生产使用"
+      ]
+    },
+    {
+      "url": "https://x.com/Aurimas_Gr/status/2024493100362563776",
+      "topics": [
+        "工作流与Agent"
+      ]
+    },
+    {
+      "url": "https://x.com/PawelHuryn/status/2033897650299207867",
+      "topics": [
+        "执行记录与交接"
+      ]
+    }
+  ],
+  "verification": [
+    "https://docs.ollama.com/context-length",
+    "https://github.com/ggml-org/llama.cpp",
+    "https://www.anthropic.com/engineering/building-effective-agents",
+    "https://docs.vllm.ai/en/latest/serving/openai_compatible_server/"
+  ],
+  "imageNote": "20张独立原创AI概念配图，各对应5篇话题；不作为真实设备实拍或实测证据。"
+}

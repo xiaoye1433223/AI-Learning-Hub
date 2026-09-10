@@ -25,8 +25,7 @@ const finish = async () => { saving.value = true; error.value = ''; try { auth.u
 .dialog-form > :not(label) { grid-column: 1 / -1; }
 .dialog-form > p { margin: 0; }
 .onboarding-themes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.onboarding-themes label { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 16px; color: var(--amc-text-body); border: 1px solid var(--amc-border); border-radius: var(--amc-radius-control); font-size: var(--amc-font-body); line-height: 1.5; overflow-wrap: anywhere; }
-.onboarding-themes input { flex: 0 0 16px; width: 16px; height: 16px; min-height: 16px; margin: 0; padding: 0; accent-color: var(--amc-orange); }
+.onboarding-themes label { padding: 16px; border: 1px solid var(--amc-border); border-radius: var(--amc-radius-control); }
 @media (max-width: 767px) {
   .onboarding-panel { margin-block: 24px; padding: 24px; }
   .dialog-form, .onboarding-themes { grid-template-columns: minmax(0, 1fr); }

@@ -1,16 +1,19 @@
+import { ConfigService } from '@nestjs/config'
+import { fileQuotaStub } from './storage.fixture'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import sharp from 'sharp'
 import { StorageBase } from '../src/modules/storage/storage.base'
 import type { PrismaService } from '../src/prisma/prisma.service'
-import type { UploadedFile } from '../src/modules/storage/storage.types'
+import type { UploadedFile, UploadedPathFile } from '../src/modules/storage/storage.types'
 import { collectArchivedMedia } from '../src/modules/media/media-gc'
 import { MediaService } from '../src/modules/media/media.service'
 
 class MemoryStorage extends StorageBase {
   objects = new Map<string, Buffer>()
   removed: string[] = []
-  constructor(prisma: unknown) { super(prisma as PrismaService, 'local') }
+  constructor(prisma: unknown) { super(prisma as PrismaService, 'local', new ConfigService({}), fileQuotaStub(prisma)) }
   protected async putObject(key: string, file: UploadedFile) { this.objects.set(key, file.buffer) }
+  protected async putPath(_key: string, _file: UploadedPathFile) { throw new Error('测试替身不处理路径上传') }
   protected async removeObject(key: string) { this.removed.push(key); this.objects.delete(key) }
   protected async objectExists(key: string) { return this.objects.has(key) }
   protected async objectUrl(key: string) { return key }
@@ -42,6 +45,23 @@ function database(options: { createFail?: boolean; commitFail?: boolean; committ
   return tx
 }
 describe('公共素材存储的去重与失败补偿', () => {
+  it('备份屏障解除前不读取或删除文件，隔离证据也不进入自动删除', async () => {
+    let release!: () => void
+    const barrier = new Promise<void>((resolve) => { release = resolve })
+    const db = {
+      $queryRaw: vi.fn().mockImplementationOnce(() => barrier).mockResolvedValue([]),
+      fileRecord: { findUnique: vi.fn().mockResolvedValue({ id: 'file-1', quarantinedAt: new Date() }), delete: vi.fn() },
+      $transaction: vi.fn(async (work: (tx: unknown) => unknown) => work(db)),
+    }
+    const storage = new MemoryStorage(db)
+    const deleting = storage.delete('file-1')
+    expect(db.fileRecord.findUnique).not.toHaveBeenCalled()
+    expect(storage.removed).toEqual([])
+    release()
+    await expect(deleting).rejects.toThrow('隔离文件')
+    expect(storage.removed).toEqual([])
+    expect(db.fileRecord.delete).not.toHaveBeenCalled()
+  })
   it.each([true, false])('已软删除=%s的重复图片不复活，提示与真实恢复能力一致', async (deleted) => {
     const db = {
       $queryRaw: vi.fn(async () => []), mediaAsset: { findUnique: vi.fn(async () => ({ status: 'archived', deletedAt: deleted ? new Date() : null })), count: vi.fn(async () => 1) },

@@ -1,4 +1,6 @@
 import type { CatalogCoverData } from './media'
+export * from './content-detection'
+export * from './account-security'
 
 export enum PublishStatus {
   DRAFT = 'draft',
@@ -47,6 +49,7 @@ export enum QuestionType {
 
 export interface ApiEnvelope<T> {
   code: number
+  errorCode?: string
   message: string
   data: T
   requestId: string
@@ -391,6 +394,7 @@ export interface HomepageResolvedItemDto {
   title: string
   summary: string
   data: Record<string, unknown>
+  slot?: number
 }
 
 export interface PublicHomepageModuleDto {
@@ -468,3 +472,8 @@ export * from './auth'
 export * from './persistence'
 export * from './landing'
 export * from './media'
+export * from './resource-hub'
+export * from './governance'
+export * from './media-runtime'
+export * from './operations'
+export * from './moderation'

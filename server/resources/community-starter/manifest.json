@@ -1,0 +1,174 @@
+{
+  "id": "ai-discussions-v1",
+  "version": 1,
+  "batch": "ai-posts-01a08549",
+  "contentSha256": "5e5d0cc1568eeec349c29b83328664c60508caecc5cb94bc6b370fa746896ea7",
+  "counts": {
+    "profiles": 30,
+    "posts": 100,
+    "comments": 200,
+    "images": 20
+  },
+  "images": [
+    {
+      "id": "local-desk",
+      "file": "images/local-desk.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 145234,
+      "sha256": "d0221c0ff342bb3ff6f2f6396c242588cddca47c235baf12836f6032aa0f835b"
+    },
+    {
+      "id": "gpu-bench",
+      "file": "images/gpu-bench.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 265432,
+      "sha256": "2346155e607a2bdbb9f15c667c494dec20af3fb9db540083b27e12cf456cd331"
+    },
+    {
+      "id": "memory",
+      "file": "images/memory.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 500008,
+      "sha256": "e6817f6990f516468bb906695970e44c9415b4a714ec25c237c75009f41f334c"
+    },
+    {
+      "id": "edge-robot",
+      "file": "images/edge-robot.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 185868,
+      "sha256": "da5c004bfac7a6a153d0fb84d38f61b36cb1a6218341fdbe0e8f3a2ae4a979ae"
+    },
+    {
+      "id": "voice-glasses",
+      "file": "images/voice-glasses.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 152384,
+      "sha256": "b06fdeefe082c82e862c630a92c489dc4bd26585cc6984caa1763a431271f3a8"
+    },
+    {
+      "id": "server-ops",
+      "file": "images/server-ops.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 189122,
+      "sha256": "de6976ce78c14f3197e101d4c1c02beadb37a55fdb69307fa7a3359e62cad6b3"
+    },
+    {
+      "id": "deployment",
+      "file": "images/deployment.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 269300,
+      "sha256": "fae2c1ddc231c3e211aae8cfff76d206f0a55394e5195201c134e45efd203dcb"
+    },
+    {
+      "id": "quantization",
+      "file": "images/quantization.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 197036,
+      "sha256": "aeb0aab634496bb2234b198e295c263646927842c3c358559d3b09ceda4e0b76"
+    },
+    {
+      "id": "latency",
+      "file": "images/latency.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 203768,
+      "sha256": "51272841061745cdacb08ab01cef54fa2aaa54a53055cb4ce44398a42421fb4e"
+    },
+    {
+      "id": "multimodal",
+      "file": "images/multimodal.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 393598,
+      "sha256": "f795dd31318b0016a6992e48d83b970b555bcdce6b83f55d5a91a12736cc115e"
+    },
+    {
+      "id": "agents",
+      "file": "images/agents.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 158486,
+      "sha256": "a251c5ad5575f26112906e7639e8c1f26ee6836e8ce89b99ceadcb00168db276"
+    },
+    {
+      "id": "rag",
+      "file": "images/rag.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 234704,
+      "sha256": "7abbf94f1af3303c9ee4ca6c9082dd00ca45346780858e0f2dd0d2d2052abf24"
+    },
+    {
+      "id": "creative",
+      "file": "images/creative.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 269976,
+      "sha256": "5f69d4445c5596271d2486cddc4e646371f2e3ea45c88dd008635ff894c57ca1"
+    },
+    {
+      "id": "coding",
+      "file": "images/coding.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 248896,
+      "sha256": "2465b4c9b1bfb276eb61b87bb8955caf800bfae8f0b9b774827f60ac7f737b49"
+    },
+    {
+      "id": "evaluation",
+      "file": "images/evaluation.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 195724,
+      "sha256": "0f5896513565ba80e85cffbdf084cde56a54621ba6c70974409e8253b6b57c3a"
+    },
+    {
+      "id": "consulting",
+      "file": "images/consulting.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 188218,
+      "sha256": "196f5b7e28a95cf7a3c8881630ebfaea544be08b0d0d29a770161e1c995f1a5c"
+    },
+    {
+      "id": "business-flow",
+      "file": "images/business-flow.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 190234,
+      "sha256": "3367875ee3b4622351881cd2bea93cd0272a76b581f6efcb187430aea42087aa"
+    },
+    {
+      "id": "cost",
+      "file": "images/cost.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 191916,
+      "sha256": "2ed5134de032c67a04505b84c7e8c3246f33c22c9a4ab02189f716b256a70261"
+    },
+    {
+      "id": "privacy",
+      "file": "images/privacy.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 403258,
+      "sha256": "be21dc888d24c1f0e5c612525d19ba8e0a165cd01035c5c3f1b6ca62813ae1dc"
+    },
+    {
+      "id": "handover",
+      "file": "images/handover.webp",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 126722,
+      "sha256": "b25268657b2d72a7b6be0d1db1a0518f6208a422a118bdb08e5aec299d54894a"
+    }
+  ]
+}

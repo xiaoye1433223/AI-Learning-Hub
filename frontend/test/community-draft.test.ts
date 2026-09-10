@@ -6,33 +6,107 @@ import { createMemoryHistory, createRouter, isNavigationFailure, NavigationFailu
 import { useCommunityDraft } from '../src/community/composables/useCommunityDraft'
 import { useCommunityStore } from '../src/stores/community'
 import { communityApi } from '../src/services/api/community'
-import type { CommunityPostDetailDto } from '@ai-learning-hub/contracts'
+import type { CommunityAuthorDto, CommunityPostDetailDto } from '@ai-learning-hub/contracts'
 import CommunityQuickComposer from '../src/community/CommunityQuickComposer.vue'
 import CommunityComposer from '../src/community/CommunityComposer.vue'
 import CommunityDraftConflict from '../src/community/CommunityDraftConflict.vue'
+import CommunityDraftsView from '../src/community/CommunityDraftsView.vue'
 import { setupComponent } from '../src/community/test-renderer'
 import { communityScrollRoot } from '../src/community/composables/useCommunityScrollRoot'
 import { ApiError } from '../src/services/api/client'
 
-const account = reactive({ user: { id: 'owner-a' } as { id: string } | null, dataMode: 'mock' })
+const account = reactive({ user: { id: 'owner-a', communityWriteEnabled: true } as { id: string; communityWriteEnabled: boolean } | null, dataMode: 'mock' })
 vi.mock('../src/stores/auth', () => ({ useAuthStore: () => account }))
-vi.mock('../src/services/api/community', () => ({ communityApi: { topics: vi.fn(), save: vi.fn(), saveDraft: vi.fn(), upload: vi.fn(), bindingContext: vi.fn(), post: vi.fn() } }))
+vi.mock('../src/services/api/community', () => ({ communityApi: { topics: vi.fn(), drafts: vi.fn(), save: vi.fn(), saveDraft: vi.fn(), upload: vi.fn(), bindingContext: vi.fn(), post: vi.fn() } }))
 const storage = new Map<string, string>()
 const key = (id: string) => `community-draft:mock:${id}`
 const settle = async () => { await nextTick(); await Promise.resolve(); await nextTick() }
 const post = { id: 'saved-post', type: 'general', status: 'published', topics: [], viewerState: {} } as CommunityPostDetailDto
 beforeEach(() => {
   vi.useFakeTimers(); vi.resetAllMocks(); storage.clear(); setActivePinia(createPinia())
-  account.user = { id: 'owner-a' }
+  account.user = { id: 'owner-a', communityWriteEnabled: true }
   account.dataMode = 'mock'
   vi.stubGlobal('localStorage', { getItem: (name: string) => storage.get(name) || null, setItem: (name: string, value: string) => storage.set(name, value), removeItem: (name: string) => storage.delete(name) })
   vi.stubGlobal('window', new EventTarget())
   vi.mocked(communityApi.topics).mockResolvedValue([])
+  vi.mocked(communityApi.drafts).mockResolvedValue([])
   vi.mocked(communityApi.save).mockResolvedValue(post)
   vi.mocked(communityApi.saveDraft).mockResolvedValue({ id: 'server-draft' } as CommunityPostDetailDto)
 })
 afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals() })
 describe('共享发布器与草稿账号隔离', () => {
+  it('替代退出前立即保存最新输入，停止自动同步，原账号可恢复且不串号', async () => {
+    const editor = useCommunityDraft(), store = useCommunityStore()
+    store.openComposer(); await settle()
+    editor.body = '刚输入尚未来得及自动保存的正文'; editor.form.title = '会话恢复标题'
+    editor.preserveSession()
+    expect(JSON.parse(storage.get(key('owner-a'))!).input.contentBlocks).toEqual([{ type: 'paragraph', text: '刚输入尚未来得及自动保存的正文' }])
+    expect(JSON.parse(storage.get(key('owner-a'))!).unconfirmed).toBeUndefined()
+    account.user = null; store.clear(); await settle(); await vi.advanceTimersByTimeAsync(12000)
+    expect(communityApi.save).not.toHaveBeenCalled(); expect(communityApi.saveDraft).not.toHaveBeenCalled()
+    account.user = { id: 'owner-b', communityWriteEnabled: true }; store.openComposer(); await settle()
+    expect(editor.body).toBe(''); expect(storage.has(key('owner-b'))).toBe(false)
+    store.clear(); account.user = { id: 'owner-a', communityWriteEnabled: true }; store.openComposer(); await settle()
+    expect(editor.body).toBe('刚输入尚未来得及自动保存的正文'); expect(editor.savedAt).toContain('尚未同步')
+  })
+  it('关闭编辑器后草稿箱刷新，继续编辑使用最新封面及版本', async () => {
+    const view = setupComponent<{ drafts: unknown[] }>(CommunityDraftsView)
+    await settle()
+    const store = useCommunityStore()
+    store.openComposer({ title: '封面草稿', contentBlocks: [] })
+    await settle()
+    const updated = { id: 'draft', revision: 3, input: { coverFileId: 'new-cover', expectedRevision: 3 } }
+    vi.mocked(communityApi.drafts).mockResolvedValueOnce([updated] as never)
+    store.composerOpen = false
+    await settle()
+    expect(view.state.drafts).toEqual([updated])
+    view.unmount()
+  })
+  it('普通图文草稿保留独立封面与原帖子类型，清除封面显式发送 null', async () => {
+    const editor = useCommunityDraft(), store = useCommunityStore()
+    store.openComposer({ type: 'general', status: 'draft', title: '普通图文', contentBlocks: [{ type: 'paragraph', text: '正文保持独立' }], coverFileId: 'own-cover' })
+    await settle()
+    expect(store.composerMode).toBe('rich')
+    expect(await editor.save(true)).toBe(true)
+    expect(communityApi.saveDraft).toHaveBeenLastCalledWith(expect.objectContaining({ type: 'general', coverFileId: 'own-cover' }), undefined, expect.any(String))
+    expect(vi.mocked(communityApi.saveDraft).mock.calls[0][0].contribution).toBeUndefined()
+    editor.form.coverFileId = null
+    await editor.save(true)
+    expect(communityApi.saveDraft).toHaveBeenLastCalledWith(expect.objectContaining({ coverFileId: null }), expect.any(String), expect.any(String))
+  })
+  it('图文复用真实发布：失败保稿、同键重试、待复核不声称公开', async () => {
+    const editor = useCommunityDraft(), store = useCommunityStore()
+    const blocks = [{ type: 'rich_text' as const, text: '<h2>实践记录</h2><p><strong>核心结论</strong></p>' }, { type: 'image' as const, fileId: 'owned-file', alt: '实验截图' }]
+    store.openComposer({ title: '课程实践', contentBlocks: blocks, visibility: 'school', contribution: { kind: 'article', tags: [], teachingReuseConsent: false } })
+    await settle()
+    expect(store.composerMode).toBe('rich')
+    expect(editor.blocks).toEqual(blocks)
+    vi.mocked(communityApi.save).mockRejectedValueOnce(new ApiError('网络断开', 0)).mockResolvedValueOnce({ ...post, status: 'pending_review' })
+    expect(await editor.save()).toBe(false)
+    expect(store.composerOpen).toBe(true)
+    expect(editor.blocks).toEqual(blocks)
+    expect(JSON.parse(storage.get(key('owner-a'))!).input.contentBlocks).toEqual(blocks)
+    expect(await editor.save()).toBe(true)
+    const calls = vi.mocked(communityApi.save).mock.calls
+    expect(calls[0][2]).toBe(calls[1][2])
+    expect(calls[1][0]).toMatchObject({ visibility: 'school', contentBlocks: blocks, contribution: { kind: 'article' } })
+    expect(storage.has(key('owner-a'))).toBe(false)
+    expect(store.publishNotice?.text).toContain('尚未公开')
+    expect(store.publishNotice?.text).not.toContain('发布成功')
+  })
+  it('图文输入错误不发送；草稿恢复不丢失格式、文件ID或覆盖可见范围', async () => {
+    const editor = useCommunityDraft(), store = useCommunityStore()
+    const blocks = [{ type: 'rich_text' as const, text: '<p>保留正文</p>' }]
+    store.openComposer({ title: '图文草稿', status: 'draft', visibility: 'school', contentBlocks: blocks, expectedRevision: 2, contribution: { kind: 'article', tags: [], teachingReuseConsent: false } }, 'existing-draft')
+    await settle()
+    editor.richError = '图片未上传'
+    expect(await editor.save()).toBe(false)
+    expect(communityApi.save).not.toHaveBeenCalled()
+    expect(editor.blocks).toEqual(blocks)
+    editor.richError = ''
+    await editor.save(true)
+    expect(communityApi.saveDraft).toHaveBeenCalledWith(expect.objectContaining({ contentBlocks: blocks, visibility: 'school', expectedRevision: 2 }), 'existing-draft', expect.any(String))
+  })
   it.each(['inline', 'quick-dialog', 'advanced-dialog'])('%s 冲突恢复控件位于实际编辑表单内，不被原生模态弹窗隔离', async (mode) => {
     const pinia = createPinia()
     setActivePinia(pinia)
@@ -209,13 +283,19 @@ describe('共享发布器与草稿账号隔离', () => {
     expect(vi.mocked(communityApi.save).mock.calls[0][0].contentBlocks).toEqual([{ type: 'paragraph', text: '第二次填写的有效正文' }])
     expect(editor.body).toBe(''); expect(store.composerOpen).toBe(false)
   })
-  it('快捷切高级共用正文、图片、关联与保存请求', async () => {
+  it('快捷高级编辑打开写图文并保留正文、图片和发布参数', async () => {
+    const view = setupComponent<{ advanced: () => void }>(CommunityQuickComposer)
     const editor = useCommunityDraft(), store = useCommunityStore()
-    store.openComposer(); await settle()
+    store.openComposer({ type: 'note', title: '学习笔记', visibility: 'school' }); store.composerInline = true; await settle()
     editor.body = '切换编辑模式不丢内容'; editor.images = [{ fileId: 'image-a', alt: '学习图片' }]
-    store.composerMode = 'advanced'; expect(useCommunityDraft()).toBe(editor)
+    editor.form.bindings = [{ type: 'course', id: 'course-a' }]; editor.form.topicIds = ['topic-a']
+    view.state.advanced(); await settle()
+    expect(store.composerMode).toBe('rich'); expect(store.composerInline).toBe(false)
+    expect(useCommunityDraft()).toBe(editor)
+    expect(editor.richBlocks).toEqual([{ type: 'paragraph', text: '切换编辑模式不丢内容' }, { type: 'image', fileId: 'image-a', alt: '学习图片' }])
     await editor.save()
-    expect(communityApi.save).toHaveBeenCalledWith(expect.objectContaining({ contentBlocks: [{ type: 'paragraph', text: '切换编辑模式不丢内容' }, { type: 'image', fileId: 'image-a', alt: '学习图片' }] }), undefined, expect.any(String))
+    expect(communityApi.save).toHaveBeenCalledWith(expect.objectContaining({ type: 'note', title: '学习笔记', visibility: 'school', bindings: [{ type: 'course', id: 'course-a' }], topicIds: ['topic-a'], contentBlocks: [{ type: 'paragraph', text: '切换编辑模式不丢内容' }, { type: 'image', fileId: 'image-a', alt: '学习图片' }] }), undefined, expect.any(String))
+    view.unmount()
   })
   it('切号取消待保存定时器，保留前账号已保存稿且不写后账号', async () => {
     const editor = useCommunityDraft(), store = useCommunityStore()
@@ -305,6 +385,93 @@ describe('共享发布器与草稿账号隔离', () => {
     await vi.advanceTimersByTimeAsync(2000)
     expect(editor.savedAt).toBe('本地演示草稿已保存'); expect(communityApi.saveDraft).not.toHaveBeenCalled()
     await editor.loadTopics(); expect(communityApi.topics).toHaveBeenCalledOnce()
+    view.unmount()
+  })
+  it('快捷顶部只保留内容类型和关闭按钮，且不覆盖可见范围', async () => {
+    const pinia = getActivePinia()!
+    const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/community', component: { render: () => null } }] })
+    await router.push('/community')
+    const editor = useCommunityDraft(), store = useCommunityStore()
+    store.openComposer({ visibility: 'school' }); store.composerInline = true; await settle()
+    const app = createSSRApp(CommunityQuickComposer)
+    app.use(pinia); app.use(router)
+    const html = await renderToString(app)
+    expect(html).toContain('aria-label="发布内容类型"')
+    expect(html).toContain('aria-label="收起快捷发布"')
+    expect(html).not.toContain('aria-label="可见范围"')
+    expect(html).not.toContain('登录社区用户')
+    expect(html).not.toContain('仅同校用户')
+    expect(editor.form.visibility).toBe('school')
+    editor.discard(); store.openComposer(); await settle()
+    expect(editor.form.visibility).toBe('public')
+  })
+  it('首屏直接展示投稿检测结果，不依赖滚动且不误报已发布', async () => {
+    const pinia = getActivePinia()!
+    const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/community', component: { render: () => null } }] })
+    await router.push('/community')
+    const store = useCommunityStore()
+    const root = ref({ scrollTop: 0, scrollHeight: 1400, clientHeight: 400 } as HTMLElement)
+    for (const text of ['内容已保存，等待人工复核，尚未公开。', '发布成功。提醒：请确认资源授权']) {
+      store.publishNotice = { id: 'synthetic-result', text }
+      const app = createSSRApp(CommunityComposer)
+      app.use(pinia); app.use(router); app.provide(communityScrollRoot, root)
+      const html = await renderToString(app)
+      expect(html).toContain(`<span>${text}</span>`)
+      expect(html).toContain('role="status"')
+      expect(html).toContain('/community/post/synthetic-result')
+      expect(html).not.toContain('community-publish-feedback')
+      expect(html).not.toContain('<strong>已发布</strong>')
+    }
+  })
+  it('返回顶部胶囊展示三位真实社区用户并返回主滚动区顶部', async () => {
+    const pinia = getActivePinia()!
+    const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/community', component: { render: () => null } }] })
+    await router.push('/community')
+    const users: CommunityAuthorDto[] = ['林宇', '周楠', '陈曦'].map((displayName, index) => ({ id: `user-${index}`, username: `user-${index}`, displayName, avatar: null, school: null, major: null, verifiedType: 'none' }))
+    const store = useCommunityStore()
+    store.context = { todayPlan: null, continueCourse: null, continueLab: null, currentChallenge: null, trendingTopics: [], suggestedUsers: users, needsInterests: false }
+    const scrollTo = vi.fn(), scrollElement = Object.assign(new EventTarget(), { scrollTop: 251, scrollHeight: 1400, clientHeight: 400, scrollTo })
+    const root = ref(scrollElement as unknown as HTMLElement)
+    const view = setupComponent<{ backToTop: () => void; updateBackToTop: () => void; showBackToTop: boolean }>(CommunityComposer, {}, [pinia, router], [[communityScrollRoot, root]])
+    view.state.updateBackToTop()
+    expect(view.state.showBackToTop).toBe(true)
+    scrollElement.scrollTop = 250; view.state.updateBackToTop()
+    expect(view.state.showBackToTop).toBe(false)
+    scrollElement.scrollTop = 251; view.state.updateBackToTop()
+    view.state.backToTop()
+    expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' })
+    const app = createSSRApp(CommunityComposer)
+    app.use(pinia); app.use(router); app.provide(communityScrollRoot, root)
+    const html = await renderToString(app)
+    expect(html).toContain('community-publish-feedback')
+    expect(html).toContain('已发布')
+    expect(html.match(/avatar-xs/g)).toHaveLength(3)
+    expect(html).not.toContain('查看动态')
+    expect(html).not.toContain('关闭发布提示')
+    view.unmount()
+  })
+  it('普通浏览超过四分之一时显示返回顶部控件', async () => {
+    const pinia = getActivePinia()!
+    const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/community', component: { render: () => null } }] })
+    await router.push('/community')
+    expect(useCommunityStore().publishNotice).toBeNull()
+    const root = ref({ scrollTop: 251, scrollHeight: 1400, clientHeight: 400, scrollTo: vi.fn() } as unknown as HTMLElement)
+    const app = createSSRApp(CommunityComposer)
+    app.use(pinia); app.use(router); app.provide(communityScrollRoot, root)
+    expect(await renderToString(app)).toContain('community-publish-feedback')
+  })
+  it('首次登录从欢迎页进入社区后绑定后创建的滚动根节点', async () => {
+    const pinia = getActivePinia()!
+    const router = createRouter({ history: createMemoryHistory(), routes: ['/welcome', '/community'].map((path) => ({ path, component: { render: () => null } })) })
+    await router.push('/welcome')
+    let main: HTMLElement | null = null
+    vi.stubGlobal('document', { querySelector: vi.fn(() => main) })
+    const scrollElement = Object.assign(new EventTarget(), { scrollTop: 251, scrollHeight: 1400, clientHeight: 400, scrollTo: vi.fn() })
+    router.afterEach(() => { void nextTick(() => { main = scrollElement as unknown as HTMLElement }) })
+    const view = setupComponent<{ showBackToTop: boolean }>(CommunityComposer, {}, [pinia, router])
+    await router.push('/community'); await settle()
+    scrollElement.dispatchEvent(new Event('scroll'))
+    expect(view.state.showBackToTop).toBe(true)
     view.unmount()
   })
   it('清空已暂存文字不会恢复旧正文，也不额外创建空服务端草稿', async () => {

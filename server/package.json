@@ -21,6 +21,9 @@
     "prisma:validate": "prisma validate",
     "prisma:migrate": "prisma migrate deploy",
     "bootstrap": "node dist/modules/persistence/bootstrap.js",
+    "community:import-starter": "node dist/modules/community/import-starter.js",
+    "community:check-resources": "node dist/modules/community/import-starter.js --check",
+    "test:community-starter": "node test/community-starter.cjs",
     "persistence:audit": "tsx prisma/audit-persistence.ts",
     "prisma:seed": "tsx prisma/seed.ts",
     "preprisma:seed": "npm run check:runtime",
@@ -31,11 +34,16 @@
     "media:gc": "node dist/modules/media/media-gc.js",
     "demo:cleanup": "node dist/modules/media/demo-data.js",
     "homepage:upgrade": "tsx prisma/upgrade-landing.ts",
-    "prehomepage:upgrade": "npm run build:contracts"
+    "prehomepage:upgrade": "npm run build:contracts",
+    "precommunity:import-lcz": "npm run build:contracts",
+    "community:import-lcz": "tsx prisma/import-lcz-curated-posts.ts",
+    "preresource:import-demo": "npm run build",
+    "resource:import-demo": "tsx prisma/import-resource-hub-demo.ts",
+    "resource:cleanup-demo": "tsx prisma/import-resource-hub-demo.ts --delete"
   },
   "dependencies": {
-    "@ai-learning-hub/contracts": "file:../packages/contracts",
     "@ai-learning-hub/catalog-assets": "file:../packages/catalog-assets",
+    "@ai-learning-hub/contracts": "file:../packages/contracts",
     "@ai-learning-hub/demo-fixtures": "file:../packages/demo-fixtures",
     "@aws-sdk/client-s3": "^3.933.0",
     "@aws-sdk/s3-request-presigner": "^3.933.0",
@@ -53,8 +61,10 @@
     "helmet": "^8.1.0",
     "multer": "^2.0.2",
     "nodemailer": "^9.0.6",
+    "otplib": "13.5.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "sanitize-html": "2.17.7",
     "sharp": "0.35.4"
   },
   "devDependencies": {
@@ -67,6 +77,7 @@
     "@types/multer": "^2.0.0",
     "@types/node": "^24.10.1",
     "@types/nodemailer": "^8.0.1",
+    "@types/sanitize-html": "2.16.1",
     "eslint": "^9.39.1",
     "prisma": "^6.19.0",
     "tsx": "^4.20.6",

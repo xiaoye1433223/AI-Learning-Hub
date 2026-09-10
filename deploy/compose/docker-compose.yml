@@ -1,13 +1,31 @@
 name: ai-learning-hub
 
+x-logging: &bounded-logging
+  driver: local
+  options:
+    max-size: 10m
+    max-file: "5"
+
 x-server-build: &server-build
   context: ../..
   dockerfile: server/Dockerfile
 
 services:
+  preflight:
+    image: ai-learning-hub-server:local
+    build: *server-build
+    restart: "no"
+    env_file: ${ENV_FILE:-.env}
+    command: ["node", "dist/production-preflight.js"]
+
   postgres:
+    logging: *bounded-logging
+    cpus: 2.0
+    mem_limit: 2g
+    pids_limit: 128
     image: postgres:17.6-alpine@sha256:ef257d85f76e48da1c64832459b59fcaba1a4dac97bf5d7450c77753542eee94
     restart: unless-stopped
+    networks: [data]
     environment:
       POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB required}
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER required}
@@ -25,9 +43,12 @@ services:
     image: ai-learning-hub-server:local
     build: *server-build
     restart: "no"
-    env_file: .env
+    env_file: ${ENV_FILE:-.env}
+    networks: [data]
     command: ["npx", "prisma", "migrate", "deploy"]
     depends_on:
+      preflight:
+        condition: service_completed_successfully
       postgres:
         condition: service_healthy
 
@@ -35,7 +56,14 @@ services:
     image: ai-learning-hub-server:local
     build: *server-build
     restart: "no"
-    env_file: .env
+    env_file: ${ENV_FILE:-.env}
+    networks: [edge, data]
+    environment:
+      STORAGE_LOCAL_PATH: /workspace/server/var/uploads
+      COMMUNITY_STARTER_CREDENTIALS_FILE: /workspace/server/var/initialization/community-accounts.json
+    volumes:
+      - uploads_data:/workspace/server/var/uploads
+      - initialization_data:/workspace/server/var/initialization
     command: ["npm", "run", "bootstrap"]
     depends_on:
       migrate:
@@ -46,7 +74,8 @@ services:
     image: ai-learning-hub-server:local
     build: *server-build
     restart: "no"
-    env_file: .env
+    env_file: ${ENV_FILE:-.env}
+    networks: [data]
     environment:
       LOAD_DEMO_DATA: ${LOAD_DEMO_DATA:-false}
     command: ["npm", "run", "prisma:seed"]
@@ -55,16 +84,23 @@ services:
         condition: service_completed_successfully
 
   server:
+    logging: *bounded-logging
+    init: true
+    cpus: 2.0
+    mem_limit: 2g
+    pids_limit: 128
+    stop_grace_period: 30s
     image: ai-learning-hub-server:local
     build: *server-build
     restart: unless-stopped
-    env_file: .env
+    env_file: ${ENV_FILE:-.env}
+    networks: [edge, data]
     environment:
       APP_COMMIT_SHA: ${APP_COMMIT_SHA:-local}
       PORT: 3000
       NODE_ENV: production
-      COOKIE_SECURE: ${COOKIE_SECURE:-false}
-      TRUSTED_PROXY_CIDRS: ${TRUSTED_PROXY_CIDRS:-172.16.0.0/12}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      TRUSTED_PROXY_CIDRS: ${TRUSTED_PROXY_CIDRS:-172.30.80.10/32,172.30.80.11/32}
       STORAGE_LOCAL_PATH: /workspace/server/var/uploads
     volumes:
       - uploads_data:/workspace/server/var/uploads
@@ -79,6 +115,10 @@ services:
       start_period: 20s
 
   student-web:
+    logging: *bounded-logging
+    cpus: 0.5
+    mem_limit: 256m
+    pids_limit: 64
     image: ai-learning-hub-student:local
     build:
       context: ../..
@@ -86,8 +126,16 @@ services:
       args:
         VITE_DATA_MODE: api
         VITE_API_BASE_URL: /api/v1
-        VITE_ADMIN_PREVIEW_ORIGINS: ${ADMIN_PREVIEW_ORIGINS:-}
+        VITE_ADMIN_PREVIEW_ORIGINS: ${ADMIN_WEB_URL:-}
     restart: unless-stopped
+    environment:
+      EXTERNAL_PROXY_CIDRS: ${EXTERNAL_PROXY_CIDRS:-}
+      ADMIN_NETWORK_CIDRS: ${ADMIN_NETWORK_CIDRS:-127.0.0.1/32,::1/128}
+      ADMIN_WEB_URL: ${ADMIN_WEB_URL:-}
+      FRONTEND_URL: ${FRONTEND_URL:-}
+    networks:
+      edge:
+        ipv4_address: ${STUDENT_PROXY_IP:-172.30.80.10}
     ports:
       - "${BIND_ADDRESS:-127.0.0.1}:${STUDENT_PORT:-8080}:80"
     depends_on:
@@ -101,15 +149,27 @@ services:
       start_period: 10s
 
   admin-web:
+    logging: *bounded-logging
+    cpus: 0.5
+    mem_limit: 256m
+    pids_limit: 64
     image: ai-learning-hub-admin:local
     build:
       context: ../..
       dockerfile: admin-web/Dockerfile
       args:
-        VITE_STUDENT_PREVIEW_URL: ${STUDENT_PREVIEW_URL:-}
+        VITE_STUDENT_PREVIEW_URL: ${FRONTEND_URL:-}
     restart: unless-stopped
+    environment:
+      EXTERNAL_PROXY_CIDRS: ${EXTERNAL_PROXY_CIDRS:-}
+      ADMIN_NETWORK_CIDRS: ${ADMIN_NETWORK_CIDRS:-127.0.0.1/32,::1/128}
+      ADMIN_WEB_URL: ${ADMIN_WEB_URL:-}
+      FRONTEND_URL: ${FRONTEND_URL:-}
+    networks:
+      edge:
+        ipv4_address: ${ADMIN_PROXY_IP:-172.30.80.11}
     ports:
-      - "${BIND_ADDRESS:-127.0.0.1}:${ADMIN_PORT:-8081}:80"
+      - "${ADMIN_BIND_ADDRESS:-127.0.0.1}:${ADMIN_PORT:-8081}:80"
     depends_on:
       server:
         condition: service_healthy
@@ -123,3 +183,12 @@ services:
 volumes:
   postgres_data:
   uploads_data:
+  initialization_data:
+
+networks:
+  edge:
+    ipam:
+      config:
+        - subnet: ${PROXY_SUBNET:-172.30.80.0/24}
+  data:
+    internal: true

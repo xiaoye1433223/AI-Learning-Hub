@@ -1,0 +1,8 @@
+[Unit]
+Description=每30分钟执行校园社区备份
+[Timer]
+OnCalendar=*-*-* *:00,30:00
+Persistent=true
+RandomizedDelaySec=30
+[Install]
+WantedBy=timers.target

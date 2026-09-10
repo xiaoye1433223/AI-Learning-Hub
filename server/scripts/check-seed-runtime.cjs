@@ -10,7 +10,7 @@ const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-seed-runtime-')
 try {
   const target = path.join(temporary, 'server')
   fs.mkdirSync(path.join(target, 'scripts'), { recursive: true })
-  for (const name of ['package.json', 'prisma', 'dist']) fs.cpSync(path.join(source, name), path.join(target, name), { recursive: true })
+  for (const name of ['package.json', 'prisma', 'dist', 'resources']) fs.cpSync(path.join(source, name), path.join(target, name), { recursive: true })
   for (const name of ['modules/homepage/upgrade-landing.ts', 'modules/persistence/bootstrap.ts']) {
     const dest = path.join(target, 'src', name)
     fs.mkdirSync(path.dirname(dest), { recursive: true })

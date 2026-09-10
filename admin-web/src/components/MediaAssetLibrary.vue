@@ -178,10 +178,9 @@ onBeforeUnmount(() => { loadEpoch++; detailEpoch++ })
 <style scoped>
 .media-library, .media-library :is(div, section, button, label) { min-width: 0; }
 .media-filters { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-.media-filters label { display: grid; gap: 6px; flex: 1 1 125px; font-size: 12px; color: #69635d; }
-.media-filters input, .media-filters select, .media-detail input, .media-detail select { width: 100%; min-width: 0; min-height: 34px; border: 1px solid #e5e0da; border-radius: 7px; padding: 7px 9px; background: #fff; }
-.media-filters .media-checkbox { display: flex; flex: 0 0 auto; align-items: center; padding-bottom: 8px; }
-.media-checkbox input { width: auto; min-height: 0; }
+.media-filters label:not(.media-checkbox) { display: grid; gap: 6px; flex: 1 1 125px; font-size: 12px; color: #69635d; }
+.media-filters input:not([type="checkbox"]), .media-filters select, .media-detail input, .media-detail select { width: 100%; min-width: 0; min-height: 34px; border: 1px solid #e5e0da; border-radius: 7px; padding: 7px 9px; background: #fff; }
+.media-filters .media-checkbox { flex: 0 0 auto; padding-bottom: 8px; }
 .media-upload { padding: 14px; margin: 16px 0; border: 1px solid #e7e2dc; border-radius: 12px; background: #faf9f7; }
 .media-upload summary, .media-default-list summary { cursor: pointer; margin-bottom: 12px; }
 .media-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }

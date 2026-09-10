@@ -1,12 +1,13 @@
 import { Transform } from 'class-transformer'
-import { IsBoolean, IsEmail, IsIn, IsInt, IsOptional, IsString, Length, Matches, Max, Min } from 'class-validator'
+import { IsBoolean, IsEmail, IsIn, IsInt, IsNotIn, IsOptional, IsString, Length, Matches, Max, Min } from 'class-validator'
 import type { PasswordForgotInput, PasswordResetInput, RegisterInput, RegistrationSettingsDto } from '@ai-learning-hub/contracts'
+import { RESERVED_USERNAMES, USERNAME_PATTERN } from './username'
 
 export class LoginDto {
   @IsOptional() @IsBoolean() remember = true
-  @IsEmail()
-  @Transform(({ value }) => typeof value === 'string' ? value.trim().toLowerCase() : value)
-  email!: string
+  @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
+  @IsString() @Length(3, 254)
+  identifier!: string
 
   @IsString()
   @Length(8, 128)
@@ -14,9 +15,10 @@ export class LoginDto {
 }
 
 export class RegisterDto implements RegisterInput {
+  @Transform(({ value }) => typeof value === 'string' ? value.trim().toLowerCase() : value) @IsString() @Matches(USERNAME_PATTERN) @IsNotIn(RESERVED_USERNAMES) username!: string
   @Transform(({ value }) => typeof value === 'string' ? value.trim() : value) @IsString() @Length(2, 40) displayName!: string
   @Transform(({ value }) => typeof value === 'string' ? value.trim().toLowerCase() : value) @IsEmail() @Length(3, 254) email!: string
-  @IsString() @Length(8, 128) @Matches(/^(?=.*[a-zA-Z])(?=.*\d)[\s\S]+$/, { message: '密码须同时包含字母和数字' }) password!: string
+  @IsString() @Length(1, 128) password!: string
   @IsString() @Length(1, 60) agreementVersion!: string
   @IsOptional() @IsString() @Length(1, 128) inviteCode?: string
 }
@@ -25,7 +27,7 @@ export class ForgotPasswordDto implements PasswordForgotInput {
 }
 export class ResetPasswordDto implements PasswordResetInput {
   @IsString() @Matches(/^[A-Za-z0-9_-]{40,128}$/) token!: string
-  @IsString() @Length(8, 128) @Matches(/^(?=.*[a-zA-Z])(?=.*\d)[\s\S]+$/) password!: string
+  @IsString() @Length(1, 128) password!: string
 }
 export class VerificationDto {
   @IsString() @Matches(/^[A-Za-z0-9_-]{40,128}$/) token!: string
@@ -35,8 +37,12 @@ export class RegistrationSettingsInput implements RegistrationSettingsDto {
   @IsIn(['open', 'invite', 'closed']) mode!: RegistrationSettingsDto['mode']
   @IsBoolean() emailVerification!: boolean
   @IsString() @Length(1, 60) agreementVersion!: string
-  @IsInt() @Min(8) @Max(72) passwordMinLength!: number
+  @IsInt() @Min(12) @Max(72) passwordMinLength!: number
   @IsBoolean() schoolRequired!: boolean
+  @IsInt() @Min(1) @Max(1440) registrationRateWindowMinutes!: number
+  @IsInt() @Min(10) @Max(10000) registrationMaxAttemptsPerIp!: number
+  @IsInt() @Min(2) @Max(100) registrationMaxAttemptsPerIdentifier!: number
+  @IsInt() @Min(5) @Max(1000) registrationMaxSuccessPerIp!: number
 }
 
 export class UpdateProfileDto {
@@ -50,4 +56,26 @@ export class WechatCodeDto {
   @IsString()
   @Length(4, 256)
   code!: string
+}
+
+export class MfaChallengeInputDto {
+  @IsString() @Length(40, 2048) challenge!: string
+}
+export class MfaVerifyDto extends MfaChallengeInputDto {
+  @IsString() @Length(6, 64) code!: string
+  @IsOptional() @IsBoolean() remember = true
+}
+export class ReauthenticateDto {
+  @IsString() @Length(1, 128) currentPassword!: string
+  @IsOptional() @IsString() @Length(6, 64) mfaCode?: string
+}
+export class ChangePasswordDto extends ReauthenticateDto {
+  @IsString() @Length(1, 128) password!: string
+}
+export class ChangeEmailDto extends ReauthenticateDto {
+  @Transform(({ value }) => typeof value === 'string' ? value.trim().toLowerCase() : value)
+  @IsEmail() @Length(3, 254) email!: string
+}
+export class BindWechatDto extends ReauthenticateDto {
+  @IsString() @Length(4, 256) code!: string
 }

@@ -1,0 +1,11 @@
+[Unit]
+Description=清理过期凭证及已确认无引用文件
+After=docker.service
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/aihub-operations/runtime.env
+ExecStart=/usr/bin/docker compose exec -T -e OPS_MAINTENANCE_APPLY=true server node dist/modules/persistence/maintenance.js
+TimeoutStartSec=10min
+KillMode=control-group
+UMask=0077
+Nice=10

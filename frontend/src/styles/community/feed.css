@@ -5,7 +5,7 @@
 .community-feed-tabs { display: flex; border-bottom: 1px solid var(--amc-border-soft); overflow-x: auto; scrollbar-width: thin; }
 .community-feed-tabs button { flex: 1; background: none; border: none; border-bottom: 2px solid transparent; min-height: 62px; font-size: 16px; font-weight: 650; color: var(--amc-text-secondary); white-space: nowrap; padding: 0 14px; }
 .community-feed-tabs button[aria-selected="true"] { border-bottom-color: var(--amc-orange); color: var(--amc-text-primary); }
-.community-feed-mode-row .icon-button { box-shadow: var(--amc-shadow-card); }
+.community-feed-mode-row .icon-button { border: 0; border-radius: 0; background: transparent; }
 .community-filters { display: flex; align-items: center; min-height: 60px; gap: 8px; padding: 12px 0; overflow-x: auto; scrollbar-width: thin; }
 .community-filters button { background: var(--amc-bg-soft); border: 1px solid var(--amc-border-soft); border-radius: var(--amc-radius-pill); padding: 6px 14px; font-size: 12px; min-height: 34px; white-space: nowrap; }
 .community-filters .active { background: var(--amc-orange-soft); color: var(--amc-orange); border-color: var(--amc-orange-border); }

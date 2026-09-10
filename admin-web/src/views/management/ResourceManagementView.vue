@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { AdminResourceDetailDto, UpdateResourceInput } from '@ai-learning-hub/contracts'
+import type { AdminResourceDetailDto, ResourceHubAdminListDto, ResourceHubPageDto, ResourceProcessingFailureDto, ResourceReportSummaryDto, ResourceAdminCollectionDto, ResourceHubAdminConfigDto, ResourceHubCategoryDto, ResourceHubItemDto, UpdateResourceInput } from '@ai-learning-hub/contracts'
 import { ElMessage } from 'element-plus'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import AdminKpiCard from '../../components/AdminKpiCard.vue'
 import DomainPageShell from '../../components/DomainPageShell.vue'
 import { useDraftEditor } from '../../composables/useDraftEditor'
@@ -9,6 +9,7 @@ import { usePagedList } from '../../composables/usePagedList'
 import { usePermissionAction } from '../../composables/usePermissionAction'
 import { usePublishAction } from '../../composables/usePublishAction'
 import { api } from '../../services/api'
+import type { MediaRuntimeDto } from '@ai-learning-hub/contracts'
 
 const list = usePagedList('resources')
 const { result, keyword, status, dataOrigin, loading, error, selected } = list
@@ -16,9 +17,34 @@ const drafts = useDraftEditor('resources')
 const publishing = usePublishAction('resources')
 const canWrite = usePermissionAction('resource.write')
 const canPublish = usePermissionAction('resource.publish')
+const canCreateCourse = usePermissionAction('course.write')
 const dialog = ref(false)
 const detail = ref<AdminResourceDetailDto | null>(null)
 const file = ref<File | null>(null)
+type HubItem = ResourceHubItemDto & { status: string; visibility: string; reportCount: number; deletedAt: string | null; categoryId: string }
+type HubCategory = ResourceHubCategoryDto & { active: boolean }
+type HubCollection = ResourceAdminCollectionDto
+const hubTab = ref<'legacy' | 'content' | 'home' | 'categories' | 'collections' | 'processing' | 'reports'>('legacy')
+const hubItems = ref<HubItem[]>([])
+const hubKeyword = ref('')
+const hubKind = ref<'all' | 'video' | 'article' | 'document'>('all')
+const hubCategory = ref('')
+const hubNextCursor = ref<string | null>(null), hubLoadingMore = ref(false)
+let hubEpoch = 0, auxiliaryEpoch = 0
+onBeforeUnmount(() => { hubEpoch++; auxiliaryEpoch++ })
+const hubCategories = ref<HubCategory[]>([])
+const hubConfig = ref<ResourceHubAdminConfigDto>({ revision: 0, bannerPostIds: [], sectionCategoryCodes: [] })
+const hubFailures = ref<ResourceProcessingFailureDto[]>([])
+const mediaRuntime = ref<MediaRuntimeDto | null>(null)
+const sizeLabel = (bytes: number) => `${(bytes / 1024 ** 3).toFixed(2)} GB`
+const hubReports = ref<ResourceReportSummaryDto[]>([])
+const canReadReports = usePermissionAction('community.report.manage')
+const auxiliaryCursors = reactive<Record<string, string | null>>({ processing: null, reports: null, collections: null })
+const auxiliaryLoading = ref(false)
+const hubCollections = ref<HubCollection[]>([])
+const hubReason = ref('教程中心后台整理')
+const newCategory = reactive({ code: '', name: '', description: '', icon: 'resource', sortOrder: 100, active: true })
+const courseDrafts = reactive<Record<string, { title: string; slug: string }>>({})
 const themeOptions = ref<Array<{ databaseId: string; title: string }>>([])
 const courseOptions = ref<Array<{ databaseId: string; title: string }>>([])
 const labOptions = ref<Array<{ databaseId: string; title: string }>>([])
@@ -61,7 +87,97 @@ onMounted(async () => {
   themeOptions.value = themes.items
   courseOptions.value = courses.items
   labOptions.value = labs.items
+  await loadHub()
 })
+const hubItemsPath = (cursor = '') => `/admin/resource-hub/items?${new URLSearchParams({ limit: '18', keyword: hubKeyword.value, kind: hubKind.value, category: hubCategory.value, ...(cursor ? { cursor } : {}) })}`
+const loadHubItems = async (append = false) => {
+  if (append && (!hubNextCursor.value || hubLoadingMore.value)) return
+  const epoch = ++hubEpoch
+  hubLoadingMore.value = true
+  try {
+    const page = await api<ResourceHubAdminListDto>(hubItemsPath(append ? hubNextCursor.value || '' : ''))
+    if (epoch !== hubEpoch) return
+    const items = page.items.map((item) => ({ ...item, categoryId: item.category?.id || '' }))
+    hubItems.value = append ? [...new Map([...hubItems.value, ...items].map((item) => [item.id, item])).values()] : items
+    hubNextCursor.value = page.nextCursor
+  } catch (cause) { if (epoch === hubEpoch) error.value = cause instanceof Error ? cause.message : '列表读取失败' }
+  finally { if (epoch === hubEpoch) hubLoadingMore.value = false }
+}
+watch(hubTab, async (tab) => {
+  if (tab === 'content' || tab === 'home') await loadHubItems()
+})
+const loadHub = async () => {
+  const epoch = ++auxiliaryEpoch
+  auxiliaryLoading.value = true
+  try {
+    const [, categories, config, failures, reports, collections, runtime] = await Promise.all([
+      loadHubItems(),
+      api<HubCategory[]>('/admin/resource-hub/categories'),
+      api<ResourceHubAdminConfigDto>('/admin/resource-hub/config'),
+      api<ResourceHubPageDto<ResourceProcessingFailureDto>>('/admin/resource-hub/processing-failures'),
+      canReadReports.value ? api<ResourceHubPageDto<ResourceReportSummaryDto>>('/admin/resource-hub/reports') : Promise.resolve({ items: [], nextCursor: null }),
+      api<ResourceHubPageDto<HubCollection>>('/admin/resource-hub/collections'),
+      api<MediaRuntimeDto>('/admin/resource-hub/media-runtime'),
+    ])
+    if (epoch !== auxiliaryEpoch) return
+    hubCategories.value = categories; hubConfig.value = config; hubFailures.value = failures.items; hubReports.value = reports.items; hubCollections.value = collections.items
+    auxiliaryCursors.processing = failures.nextCursor; auxiliaryCursors.reports = reports.nextCursor; auxiliaryCursors.collections = collections.nextCursor
+    mediaRuntime.value = runtime
+    for (const collection of collections.items) courseDrafts[collection.id] ||= { title: collection.name, slug: `collection-${collection.id.slice(-8).toLowerCase()}` }
+  } catch (cause) { if (epoch === auxiliaryEpoch) error.value = cause instanceof Error ? cause.message : '资源后台读取失败' }
+  finally { if (epoch === auxiliaryEpoch) auxiliaryLoading.value = false }
+}
+const loadMoreAuxiliary = async () => {
+  const tab = hubTab.value, cursor = auxiliaryCursors[tab]
+  if (!cursor || auxiliaryLoading.value) return
+  const epoch = auxiliaryEpoch
+  auxiliaryLoading.value = true
+  const query = new URLSearchParams({ cursor })
+  try {
+    if (tab === 'processing') {
+      const page = await api<ResourceHubPageDto<ResourceProcessingFailureDto>>(`/admin/resource-hub/processing-failures?${query}`)
+      if (epoch !== auxiliaryEpoch) return
+      hubFailures.value = [...new Map([...hubFailures.value, ...page.items].map((item) => [item.id, item])).values()]; auxiliaryCursors.processing = page.nextCursor
+    } else if (tab === 'reports') {
+      const page = await api<ResourceHubPageDto<ResourceReportSummaryDto>>(`/admin/resource-hub/reports?${query}`)
+      if (epoch !== auxiliaryEpoch) return
+      hubReports.value = [...new Map([...hubReports.value, ...page.items].map((item) => [item.id, item])).values()]; auxiliaryCursors.reports = page.nextCursor
+    } else if (tab === 'collections') {
+      const page = await api<ResourceHubPageDto<HubCollection>>(`/admin/resource-hub/collections?${query}`)
+      if (epoch !== auxiliaryEpoch) return
+      hubCollections.value = [...new Map([...hubCollections.value, ...page.items].map((item) => [item.id, item])).values()]; auxiliaryCursors.collections = page.nextCursor
+      for (const collection of page.items) courseDrafts[collection.id] ||= { title: collection.name, slug: `collection-${collection.id.slice(-8).toLowerCase()}` }
+    }
+  } catch (cause) { if (epoch === auxiliaryEpoch) error.value = cause instanceof Error ? cause.message : '列表读取失败' }
+  finally { if (epoch === auxiliaryEpoch) auxiliaryLoading.value = false }
+}
+const updateHubItem = async (item: HubItem) => {
+  if (!item.postId || !item.categoryId) return
+  await api(`/admin/resource-hub/items/${item.postId}`, { method: 'PATCH', body: JSON.stringify({ categoryId: item.categoryId, featured: item.featured, liveReplay: item.liveReplay, reason: hubReason.value }) })
+  ElMessage.success('共创作品已更新'); await loadHub()
+}
+const saveHubConfig = async () => {
+  hubConfig.value = await api<ResourceHubAdminConfigDto>('/admin/resource-hub/config', { method: 'PATCH', body: JSON.stringify(hubConfig.value) })
+  ElMessage.success('教程中心首页配置已保存')
+}
+const createHubCategory = async () => {
+  await api('/admin/resource-hub/categories', { method: 'POST', body: JSON.stringify(newCategory) })
+  Object.assign(newCategory, { code: '', name: '', description: '', icon: 'resource', sortOrder: 100, active: true }); await loadHub()
+}
+const saveHubCategory = async (category: HubCategory) => {
+  await api(`/admin/resource-hub/categories/${category.id}`, { method: 'PATCH', body: JSON.stringify(category) }); await loadHub()
+}
+const retryHubVideo = async (id: string) => { await api(`/admin/resource-hub/processing-failures/${id}/retry`, { method: 'POST' }); await loadHub() }
+const cleanupHubVideos = async () => {
+  const result = await api<{ removedAssets: number; queuedFiles: string[]; retentionHours: number }>('/admin/resource-hub/processing-orphans/cleanup', { method: 'POST' })
+  ElMessage.success(`已清理 ${result.removedAssets} 个超过 ${result.retentionHours} 小时的孤立视频${result.queuedFiles.length ? `，${result.queuedFiles.length} 个文件进入安全重试队列` : ''}`)
+  await loadHub()
+}
+const collectionToCourse = async (collection: HubCollection) => {
+  const input = courseDrafts[collection.id]
+  await api(`/admin/resource-hub/collections/${collection.id}/course`, { method: 'POST', body: JSON.stringify(input) })
+  ElMessage.success('已生成课程草稿'); await loadHub()
+}
 const input = (): UpdateResourceInput => ({ ...fields, tags: fields.tags.split(',').map((item) => item.trim()).filter(Boolean) })
 const create = async (value: { slug: string; title: string; summary: string; coverAssetId: string | null }) => { await drafts.createDraft({ ...value, category: '学习手册', format: 'PDF', visibility: 'authenticated' }); dialog.value = false; await list.load(1); ElMessage.success('资源草稿已创建') }
 const save = async (base: { title: string; summary: string; sortOrder: number; coverAssetId?: string | null }) => {
@@ -93,12 +209,22 @@ const restoreVersion = async (versionId: string) => {
   await list.load(list.result.value.page)
   ElMessage.success('已从历史版本生成新的资源草稿版本')
 }
-const publish = async () => { if (list.selected.value) { await publishing.publish(list.selected.value); await list.load(); ElMessage.success('资源已发布') } }
+const publish = async () => {
+  if (!list.selected.value) return
+  const result = await publishing.publish(list.selected.value)
+  await list.load()
+  if (result.status === 'reviewing') ElMessage.warning('资源已保存，等待人工复核，尚未公开；请到社区运营的内容复核中查看。')
+  else if (result.status === 'published') {
+    ElMessage.success('资源已发布')
+    if (result.detection?.action === 'warn') ElMessage.warning([...new Set(result.detection.hits.map(hit => hit.explanation))].join('；'))
+  } else ElMessage.warning('尚未确认资源发布状态，请刷新核对。')
+}
 const archive = async () => { if (list.selected.value) { await publishing.archive(list.selected.value); await list.load(); ElMessage.success('资源已下架') } }
 </script>
 
-<template>
-  <DomainPageShell content-type="resource" :category-key="fields.category" :data-origin="dataOrigin" @update:data-origin="list.dataOrigin.value = $event" @remove="drafts.removeDraft(selected, () => list.load())" v-model:dialog="dialog" title="资源中心管理" description="维护资源文件、元数据、可见范围与关联内容" noun="资源" icon="resource" :result="result" :selected="selected" :keyword="keyword" :status="status" :loading="loading" :error="error" :can-write="canWrite" :can-publish="canPublish" @update:keyword="list.keyword.value = $event" @update:status="list.status.value = $event" @select="list.select" @page="list.load" @retry="list.load()" @create="create" @save="save" @publish="publish" @archive="archive">
+<template><div class="resource-admin-page">
+  <nav class="resource-admin-tabs" aria-label="教程中心管理工作区"><button v-for="item in ([['legacy','旧资源'],['content','共创内容'],['home','首页配置'],['categories','分类'],['collections','合集与课程'],['processing','处理异常'],['reports','举报']] as const)" :key="item[0]" :class="{ active: hubTab === item[0] }" @click="hubTab = item[0]">{{ item[1] }}</button></nav>
+  <DomainPageShell v-if="hubTab === 'legacy'" content-type="resource" :category-key="fields.category" :data-origin="dataOrigin" @update:data-origin="list.dataOrigin.value = $event" @remove="drafts.removeDraft(selected, () => list.load())" v-model:dialog="dialog" title="教程中心管理" description="维护旧版资源文件、元数据、可见范围与关联内容" noun="资源" icon="resource" :result="result" :selected="selected" :keyword="keyword" :status="status" :loading="loading" :error="error" :can-write="canWrite" :can-publish="canPublish" @update:keyword="list.keyword.value = $event" @update:status="list.status.value = $event" @select="list.select" @page="list.load" @retry="list.load()" @create="create" @save="save" @publish="publish" @archive="archive">
     <template #kpis><div class="kpi-grid"><AdminKpiCard icon="resource" label="资源总数" :value="result.total" color="#ff4d1f" /><AdminKpiCard icon="check" label="已发布" :value="result.items.filter((item) => item.status === 'published').length" color="#22b66c" /><AdminKpiCard icon="download" label="当前下载" :value="detail?.downloads ?? '—'" color="#7c4dff" /><AdminKpiCard icon="chart" label="当前浏览" :value="detail?.views ?? '—'" color="#3478f6" /></div></template>
     <template #detail><p v-if="detail?.file">{{ detail.file.name }} · {{ (detail.file.size / 1024 / 1024).toFixed(2) }} MB · {{ detail.file.mimeType }} · 上传人 {{ detail.uploadedBy?.displayName || '—' }}</p><p v-else>尚未绑定文件。</p></template>
     <template #editor>
@@ -109,4 +235,73 @@ const archive = async () => { if (list.selected.value) { await publishing.archiv
       </fieldset>
     </template>
   </DomainPageShell>
-</template>
+  <section v-else class="resource-admin-workspace">
+    <header><div><h1>{{ { content: '共创内容', home: '首页配置', categories: '资源分类', collections: '合集与课程引用', processing: '视频处理异常', reports: '资源举报' }[hubTab] }}</h1><p>复用现有资源权限、社区审核和课程版本机制。</p></div><button class="admin-secondary" @click="loadHub">刷新</button></header>
+
+    <template v-if="hubTab === 'content'">
+      <form class="resource-admin-filters" @submit.prevent="loadHubItems()">
+        <input v-model="hubKeyword" maxlength="120" placeholder="搜索标题或正文" />
+        <select v-model="hubKind" @change="loadHubItems()"><option value="all">全部形态</option><option value="video">视频</option><option value="article">图文</option><option value="document">资料</option></select>
+        <select v-model="hubCategory" @change="loadHubItems()"><option value="">全部分类</option><option v-for="category in hubCategories.filter((row) => row.active)" :key="category.id" :value="category.code">{{ category.name }}</option></select>
+        <button class="admin-secondary" type="submit">搜索</button>
+        <button class="text-link" type="button" @click="hubKeyword = ''; hubKind = 'all'; hubCategory = ''; loadHubItems()">清空</button>
+      </form>
+      <label>操作理由<input v-model="hubReason" minlength="4" /></label>
+      <div class="resource-admin-list"><article v-for="item in hubItems" :key="item.id"><div><strong>{{ item.title }}</strong><small>{{ item.author?.displayName || '未知作者' }} · {{ item.kind }} · {{ item.status }} · {{ item.mediaStatus || '无媒体处理' }} · {{ item.visibility }} · 举报 {{ item.reportCount }}</small></div><select v-model="item.categoryId"><option v-for="category in hubCategories.filter((row) => row.active)" :key="category.id" :value="category.id">{{ category.name }}</option></select><label><input v-model="item.featured" type="checkbox" />首页精选</label><label><input v-model="item.liveReplay" type="checkbox" />直播回放</label><RouterLink class="admin-secondary" :to="{ path: '/community', query: { postId: item.postId } }">进入治理</RouterLink><button class="admin-secondary" :disabled="!canWrite" @click="updateHubItem(item)">保存</button></article><p v-if="!hubItems.length">没有符合条件的共创内容。</p></div>
+      <button v-if="hubNextCursor" class="admin-secondary" type="button" :disabled="hubLoadingMore" @click="loadHubItems(true)">{{ hubLoadingMore ? '加载中…' : '加载更多共创内容' }}</button>
+    </template>
+
+    <template v-else-if="hubTab === 'home'">
+      <section class="panel domain-section"><h2>主推荐 Banner</h2><button v-if="hubNextCursor" class="admin-secondary" type="button" :disabled="hubLoadingMore" @click="loadHubItems(true)">加载更多候选作品</button><p>最多选择 5 条公开、已发布且媒体就绪的共创作品，顺序即前台顺序。</p><label v-for="item in hubItems.filter((row) => row.status === 'published' && row.visibility === 'public' && (row.kind !== 'video' || row.mediaStatus === 'ready'))" :key="item.id"><input v-model="hubConfig.bannerPostIds" type="checkbox" :value="item.postId" :disabled="!hubConfig.bannerPostIds.includes(item.postId!) && hubConfig.bannerPostIds.length >= 5" />{{ item.title }}</label></section>
+      <section class="panel domain-section"><h2>首页内容分区</h2><label v-for="category in hubCategories.filter((row) => row.active)" :key="category.id"><input v-model="hubConfig.sectionCategoryCodes" type="checkbox" :value="category.code" />{{ category.name }}</label></section>
+      <button class="admin-primary" :disabled="!canWrite" @click="saveHubConfig">保存首页配置</button>
+    </template>
+
+    <template v-else-if="hubTab === 'categories'">
+      <form class="resource-category-create" @submit.prevent="createHubCategory"><input v-model="newCategory.code" required pattern="[a-z0-9-]+" placeholder="稳定英文标识" /><input v-model="newCategory.name" required placeholder="分类名称" /><input v-model="newCategory.description" placeholder="简短说明" /><input v-model="newCategory.icon" required placeholder="图标语义名" /><input v-model.number="newCategory.sortOrder" type="number" min="0" /><button class="admin-primary" :disabled="!canWrite">新增分类</button></form>
+      <div class="resource-admin-list"><article v-for="category in hubCategories" :key="category.id"><input v-model="category.name" /><input v-model="category.description" /><input v-model="category.icon" /><input v-model.number="category.sortOrder" type="number" min="0" /><label><input v-model="category.active" type="checkbox" />启用</label><button class="admin-secondary" :disabled="!canWrite" @click="saveHubCategory(category)">保存</button></article></div>
+    </template>
+
+    <template v-else-if="hubTab === 'collections'">
+      <div class="resource-admin-list"><article v-for="collection in hubCollections" :key="collection.id"><div><strong>{{ collection.name }}</strong><small>{{ collection.owner.displayName }} · {{ collection._count.items }} 项 · 已引用 {{ collection._count.courseLinks }} 次</small><small v-if="collection.courseLinks.some((link) => link.sourceRevision !== collection.revision)" class="resource-source-change">合集已更新，已有课程草稿需要人工复核</small></div><input v-model="courseDrafts[collection.id].title" placeholder="课程标题" /><input v-model="courseDrafts[collection.id].slug" placeholder="课程标识" /><button class="admin-primary" :disabled="!canCreateCourse" @click="collectionToCourse(collection)">生成课程草稿</button></article></div><p v-if="!hubCollections.length">暂无公开合集。</p>
+    </template>
+
+    <template v-else-if="hubTab === 'processing'">
+      <template v-if="mediaRuntime">
+        <p>存储已用 {{ sizeLabel(mediaRuntime.capacity.site.usedBytes) }} · 已预留 {{ sizeLabel(mediaRuntime.capacity.site.reservedBytes + mediaRuntime.capacity.site.temporaryReservedBytes) }} · 剩余可分配 {{ sizeLabel(mediaRuntime.capacity.site.availableBytes) }} · 安全余量 {{ sizeLabel(mediaRuntime.capacity.site.minimumFreeBytes) }}</p>
+        <p>正在上传 {{ mediaRuntime.capacity.site.activeUploads }} 项；视频排队及处理中 {{ mediaRuntime.capacity.site.queuedTasks }} 项。{{ mediaRuntime.capacity.unavailableReason }}</p>
+        <p>恶意文件扫描：{{ mediaRuntime.scan.configured ? '已配置' : '不可用，未执行扫描' }}；未扫描 {{ mediaRuntime.scan.unavailableFiles }} 个，隔离 {{ mediaRuntime.scan.quarantinedFiles }} 个；安全清理待重试 {{ mediaRuntime.cleanup.pending }} 项。</p>
+        <div class="resource-admin-list"><article v-for="item in mediaRuntime.queue" :key="item.id"><div><strong>{{ item.originalName }}</strong><small>{{ { uploaded: '排队中', processing: '处理中', failed: '失败' }[item.status] || item.status }} · 已尝试 {{ item.attempts }} 次 · {{ item.lastError }}<span v-if="item.leaseExpiresAt"> · 租约至 {{ new Date(item.leaseExpiresAt).toLocaleTimeString('zh-CN') }}</span></small></div><button v-if="item.retryable" class="admin-primary" :disabled="!canWrite" @click="retryHubVideo(item.id)">重试处理</button></article></div>
+        <p v-for="job in mediaRuntime.cleanup.failures" :key="job.id">清理尝试 {{ job.attempts }} 次：{{ job.lastError }}</p>
+      </template>
+      <div><button class="admin-secondary" :disabled="!canWrite" @click="cleanupHubVideos">清理超过保留期的孤立上传</button></div>
+      <p v-if="!mediaRuntime?.queue.length">当前没有待处理或失败的视频。</p>
+    </template>
+
+    <template v-else>
+      <div class="resource-admin-list"><article v-for="report in hubReports" :key="report.id"><div><strong>{{ report.reason }}</strong><small>{{ report.status }} · {{ report.description }} · {{ new Date(report.createdAt).toLocaleString('zh-CN') }}</small></div><RouterLink v-if="report.postId" class="admin-secondary" :to="`/community?postId=${report.postId}`">进入社区审核</RouterLink></article></div><p v-if="!hubReports.length">当前没有资源举报。</p>
+    </template>
+    <button v-if="auxiliaryCursors[hubTab]" class="admin-secondary" :disabled="auxiliaryLoading" @click="loadMoreAuxiliary">{{ auxiliaryLoading ? '加载中…' : '加载更多' }}</button>
+  </section>
+</div></template>
+
+<style scoped>
+.resource-admin-page { display: grid; gap: 16px; }
+.resource-admin-tabs { display: flex; gap: 6px; overflow-x: auto; padding: 6px; border: 1px solid var(--el-border-color-light); border-radius: 12px; background: white; }
+.resource-admin-tabs button { padding: 8px 14px; white-space: nowrap; border: 0; border-radius: 8px; background: transparent; cursor: pointer; }
+.resource-admin-tabs button.active { color: var(--el-color-primary); background: var(--el-color-primary-light-9); }
+.resource-admin-workspace { display: grid; gap: 16px; padding: 20px; border: 1px solid var(--el-border-color-light); border-radius: 14px; background: white; }
+.resource-admin-workspace > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.resource-admin-workspace h1, .resource-admin-workspace p { margin: 0; }
+.resource-admin-workspace header p, .resource-admin-list small { color: #7c8494; }
+.resource-admin-list { display: grid; gap: 8px; }
+.resource-admin-list article { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 12px; border: 1px solid var(--el-border-color-light); border-radius: 10px; }
+.resource-admin-list article > div { display: flex; flex: 1; flex-direction: column; min-width: 180px; }
+.resource-admin-list article strong, .resource-admin-list article small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.resource-admin-list .resource-source-change { color: var(--el-color-warning); }
+.resource-admin-list :is(input:not([type="checkbox"]), select), .resource-category-create input { min-width: 120px; height: 36px; }
+.resource-admin-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.resource-admin-filters :is(input, select) { min-width: 150px; height: 36px; }
+.resource-category-create { display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)) auto; gap: 8px; }
+@media (max-width: 1100px) { .resource-admin-list article { align-items: stretch; flex-direction: column; } .resource-category-create { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

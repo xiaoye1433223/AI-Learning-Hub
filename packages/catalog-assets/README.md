@@ -32,9 +32,11 @@ CommonJS 运行入口为 `dist/manifest.js`，声明入口为 `dist/manifest.d.t
 
 ## 图标
 
-`icons/registry.ts` 导出 `iconRegistry`（名称→SVG内部矢量标记）与 `getIconSvg(name)`（完整 SVG）。所有图标采用 24×24 viewBox、1.8 线宽、圆端圆角、`currentColor` 和 `aria-hidden`。`icons/catalog` 与 `icons/achievements` 的独立 SVG 与注册表保持逐字一致，由校验脚本约束。
+`icons/iconfont.js` 是项目唯一 UI 图标源，使用阿里 iconfont Symbol 模式；所有路径统一为 `currentColor`。`icons/registry.ts` 只维护既有业务名称到 Symbol ID 的映射，学生端和管理端均通过现有图标组件渲染 `<use>`。
 
 未知名称返回中性 `missing` 图标；开发环境警告由页面 `AppIcon` 统一处理。正式 SVG 不含位图、Base64、脚本或外部引用。
+
+侧栏与信息流工具按钮使用 hanabizh 的[无风格化icon 图标集](https://www.iconfont.cn/collections/detail?cid=53651)：菜单 `46962277`、加载 `46962308`、搜索 `46962314`，分别映射 `sidebar-menu`、`feed-refresh`、`feed-search`；保留原始路径，仅统一为 `currentColor`。
 
 ## 生成来源
 

@@ -11,6 +11,7 @@ export class RolesGuard implements CanActivate {
     const required = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [context.getHandler(), context.getClass()]) || []
     if (!required.length) return true
     const user = context.switchToHttp().getRequest<AuthRequest>().user
+    if (required.some((role) => ['admin', 'super_admin', 'editor'].includes(role)) && (user.sessionClient !== 'admin' || !user.mfaVerified)) throw new ForbiddenException('管理操作需要后台 MFA 会话')
     if (!required.some((role) => user.roles.includes(role))) throw new ForbiddenException('无权执行该操作')
     return true
   }

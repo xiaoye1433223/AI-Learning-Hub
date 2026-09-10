@@ -1,0 +1,15 @@
+[Unit]
+Description=校园学习社区一致性加密备份
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/aihub-operations/runtime.env
+ExecStart=/usr/bin/docker compose --profile operations run --rm -T --no-deps backup
+TimeoutStartSec=25min
+KillMode=control-group
+UMask=0077
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7

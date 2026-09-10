@@ -24,7 +24,7 @@ export async function releaseUnboundMediaFile(prisma: PrismaClient, storage: Sto
 export async function collectArchivedMedia(prisma: PrismaClient, storage: StorageService, apply = false, retentionDays = 30) {
   if (!Number.isInteger(retentionDays) || retentionDays < 30) throw new Error('孤立素材安全保留期不得少于30天')
   const cutoff = new Date(Date.now() - retentionDays * 86400000)
-  const candidates = await prisma.mediaAsset.findMany({ where: { status: 'archived', updatedAt: { lt: cutoff } }, select: { id: true, assetKey: true, fileId: true } })
+  const candidates = await prisma.mediaAsset.findMany({ where: { status: 'archived', updatedAt: { lt: cutoff } }, select: { id: true, assetKey: true, fileId: true }, orderBy: [{ updatedAt: 'asc' }, { id: 'asc' }], take: 50 })
   const eligible: string[] = []
   for (const asset of candidates) {
     await prisma.$transaction(async (tx) => {
@@ -38,7 +38,7 @@ export async function collectArchivedMedia(prisma: PrismaClient, storage: Storag
   }
   let removed = 0
   const pending: string[] = []
-  if (apply) for (const job of await prisma.mediaGcJob.findMany()) {
+  if (apply) for (const job of await prisma.mediaGcJob.findMany({ orderBy: [{ updatedAt: 'asc' }, { id: 'asc' }], take: 50 })) {
     try {
       await storage.delete(job.fileId)
       await prisma.mediaGcJob.delete({ where: { id: job.id } })

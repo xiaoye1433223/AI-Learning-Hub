@@ -1,14 +1,17 @@
-import { Controller, Get } from '@nestjs/common'
-import { PrismaService } from './prisma/prisma.service'
+import { Controller, Get, ServiceUnavailableException } from '@nestjs/common'
+import { OperationsService } from './modules/persistence/operations.service'
 
 @Controller()
 export class AppController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly operations: OperationsService) {}
 
-  @Get('health')
+  @Get('health/live')
+  live() { return { status: 'alive' } }
+
+  @Get(['health', 'health/ready'])
   async health() {
-    await this.prisma.$queryRaw`SELECT 1`
-    return { status: 'ok', database: 'connected', timestamp: new Date().toISOString() }
+    if (!await this.operations.readiness()) throw new ServiceUnavailableException('服务尚未就绪')
+    return { status: 'ready' }
   }
 
   @Get('version')

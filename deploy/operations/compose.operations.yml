@@ -1,0 +1,41 @@
+# 与现行 compose 文件合并；先配置私有目录及独立仓库，再启用 operations profile。
+services:
+  server:
+    environment:
+      OPS_STATE_DIRECTORY: /workspace/server/var/operations
+    volumes:
+      - ${OPS_DIRECTORY:?required}/runtime:/workspace/server/var/operations/runtime
+      - ${OPS_DIRECTORY:?required}/backup:/workspace/server/var/operations/backup:ro
+  backup:
+    networks: [data, edge]
+    profiles: [operations]
+    image: ai-learning-hub-operations:${OPS_IMAGE_TAG:?required}
+    build:
+      context: ${OPS_CODE_DIRECTORY:?required}
+      dockerfile: Dockerfile
+    restart: "no"
+    init: true
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    cpus: 1.0
+    mem_limit: 2g
+    pids_limit: 64
+    env_file: ${OPS_DIRECTORY:?required}/backup.env
+    environment:
+      RESTIC_PASSWORD_FILE: /secrets/restic-password
+      PGPASSFILE: /secrets/pgpass
+    tmpfs:
+      - /stage:mode=0700,uid=1000,gid=1000,size=1073741824
+      - /tmp:mode=0700,uid=1000,gid=1000,size=268435456
+    volumes:
+      - uploads_data:/uploads:ro
+      - ${OPS_DIRECTORY:?required}/backup:/state
+      - ${OPS_DIRECTORY:?required}/backup.json:/config/backup.json:ro
+      - ${OPS_DIRECTORY:?required}/secrets:/secrets:ro
+      - ${OPS_RELEASE_DIRECTORY:?required}:/release:ro
+    command: [backup, --config, /config/backup.json]
+    logging:
+      driver: local
+      options: {max-size: 10m, max-file: "5"}

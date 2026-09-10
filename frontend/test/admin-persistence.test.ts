@@ -36,7 +36,7 @@ describe('后台异步详情与冻结操作目标', () => {
     view.unmount()
   })
   it('社区迟到详情不覆盖新选择，编辑以打开时完整快照提交', async () => {
-    const view = setupComponent<{ inspect: (id: string) => Promise<void>; selected: CommunityAdminInspectionDto | null; openPost: () => void; savePost: () => Promise<void>; postForm: { text: string } }>(CommunityView)
+    const view = setupComponent<{ inspect: (id: string) => Promise<void>; selected: CommunityAdminInspectionDto | null; openPost: () => void; savePost: (publish?: boolean) => Promise<void>; postForm: { text: string } }>(CommunityView)
     await flushRender()
     let resolve!: (value: CommunityAdminInspectionDto) => void
     vi.mocked(communityAdminApi.inspection).mockReturnValueOnce(new Promise((done) => { resolve = done }))
@@ -46,7 +46,29 @@ describe('后台异步详情与冻结操作目标', () => {
     view.state.openPost(); view.state.postForm.text = 'A的新正文'
     await view.state.inspect('B')
     await view.state.savePost()
-    expect(communityAdminApi.editPost).toHaveBeenCalledWith('A', expect.objectContaining({ expectedRevision: 4, contentBlocks: [{ type: 'paragraph', text: 'A的新正文' }, { type: 'code', code: 'A' }] }))
+    expect(communityAdminApi.editPost).toHaveBeenCalledWith('A', expect.objectContaining({ expectedRevision: 4, contentBlocks: [{ type: 'paragraph', text: 'A的新正文' }, { type: 'code', code: 'A' }] }), expect.any(String))
+    view.unmount()
+  })
+  it('后台代发相同内容重试复用幂等键，内容改变后换键', async () => {
+    const view = setupComponent<{ inspect: (id: string) => Promise<void>; openPost: () => void; savePost: () => Promise<void>; postForm: { text: string } }>(CommunityView)
+    await flushRender(); await view.state.inspect('A'); view.state.openPost(); view.state.postForm.text = 'A的待重试正文'
+    vi.mocked(communityAdminApi.editPost).mockRejectedValueOnce(new Error('网络中断')).mockRejectedValueOnce(new Error('响应未确认'))
+    await view.state.savePost(); await view.state.savePost()
+    view.state.postForm.text = 'A的新版正文'
+    await view.state.savePost()
+    const keys = vi.mocked(communityAdminApi.editPost).mock.calls.map((call) => call[2])
+    expect(keys[0]).toBe(keys[1]); expect(keys[2]).not.toBe(keys[1])
+    view.unmount()
+  })
+  it('外部精选草稿由后台明确确认后才发布', async () => {
+    const curated = inspection('community-lcz-1356')
+    curated.post.status = 'draft'
+    const view = setupComponent<{ inspect: (id: string) => Promise<void>; openPost: () => void; savePost: (publish?: boolean) => Promise<void>; postForm: { reason: string } }>(CommunityView)
+    vi.mocked(communityAdminApi.inspection).mockResolvedValue(curated)
+    await flushRender(); await view.state.inspect(curated.post.id); view.state.openPost()
+    view.state.postForm.reason = '已核对来源与编辑内容'
+    await view.state.savePost(true)
+    expect(communityAdminApi.editPost).toHaveBeenCalledWith(curated.post.id, expect.objectContaining({ status: 'published', expectedRevision: 4 }), expect.any(String))
     view.unmount()
   })
 })

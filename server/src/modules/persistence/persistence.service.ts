@@ -6,6 +6,8 @@ import { STORAGE_SERVICE, StorageService } from '../storage/storage.types'
 import { requiredPermissions } from './bootstrap'
 import { readdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
+import { parseIdentityDataKey } from '../users/identity-data'
+import { decryptMfa, encryptMfa } from '../auth/mfa-crypto'
 
 @Injectable()
 export class PersistenceService {
@@ -25,8 +27,20 @@ export class PersistenceService {
   }
   async preflight() {
     const status = await this.status()
-    const [permissions, roles] = await this.prisma.$transaction([this.prisma.permission.count({ where: { code: { in: requiredPermissions } } }), this.prisma.role.count({ where: { code: { in: ['student', 'super_admin'] } } })])
+    const [permissions, roles, identityRows] = await this.prisma.$transaction([this.prisma.permission.count({ where: { code: { in: requiredPermissions } } }), this.prisma.role.count({ where: { code: { in: ['student', 'super_admin'] } } }), this.prisma.campusIdentityVerification.count()])
     if (!status.database.ready || !status.storage.writable || permissions !== requiredPermissions.length || roles !== 2) throw new ServiceUnavailableException('数据库迁移、必要权限或文件存储检查未通过；请先运行 migrate 和 bootstrap')
+    const configuredIdentityKey = this.config.get<string>('IDENTITY_DATA_KEY')
+    if (identityRows || configuredIdentityKey) {
+      try { parseIdentityDataKey(configuredIdentityKey) }
+      catch { throw new ServiceUnavailableException('实名记录存在或实名能力已启用，但 IDENTITY_DATA_KEY 不是有效32字节密钥') }
+    }
+    try {
+      const key = this.config.get<string>('MFA_DATA_KEY')
+      // 既有密文也必须能解密，防止部署时误换密钥后锁死管理员。
+      encryptMfa('preflight', key, 'preflight')
+      const enrolled = await this.prisma.user.findMany({ where: { mfaSecretEncrypted: { not: null } }, select: { id: true, mfaSecretEncrypted: true } })
+      for (const user of enrolled) decryptMfa(user.mfaSecretEncrypted!, key, user.id)
+    } catch { throw new ServiceUnavailableException('MFA_DATA_KEY 缺失、格式无效或无法解密既有管理员密钥；请恢复原密钥') }
   }
   async maintain(actorId: string, action: string, reason: string, cursor?: string) {
     let count = 0

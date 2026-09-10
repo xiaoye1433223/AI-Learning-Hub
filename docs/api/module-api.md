@@ -11,7 +11,7 @@
 | 方法 | 路径 | 说明 |
 | --- | --- | --- |
 | POST | `/auth/login` | 返回短时 Access Token，并写入 HttpOnly Refresh Cookie |
-| POST | `/auth/refresh` | 轮换并撤销旧 Refresh Token |
+| POST | `/auth/refresh` | 在当前设备会话内轮换 Refresh Token，不创建新设备会话 |
 | POST | `/auth/logout` | 撤销 Refresh Token |
 | POST | `/auth/wechat/miniapp` | 微信 `code` 换取身份；未配置时返回 503 |
 | POST | `/auth/identities/wechat/bind` | 当前用户绑定微信身份 |
@@ -21,6 +21,10 @@
 | POST | `/auth/password/forgot`、`/auth/password/reset` | 通用找回提示；30分钟、一次性哈希令牌；重置后撤销刷新会话 |
 | POST | `/auth/email/verify` | 验证注册邮箱；启用验证的账号验证后才能进入社区 |
 | POST | `/auth/email/resend` | 限流重发验证邮件；不返回令牌 |
+
+同账号在同一入口仅保留一个有效设备会话。学生入口与 `/admin-auth/login`、`/admin-auth/mfa`、`/admin-auth/refresh` 的后台入口分开管理；管理员完成 MFA 后才替代旧设备。新设备登录在用户锁事务内撤销同入口旧会话，再创建会话并签发凭据，失败整体回滚。同浏览器凭有效 Cookie 再次登录复用原设备会话；刷新只轮换当前会话。
+
+被新登录替代后，认证、刷新及设备绑定媒体请求返回 HTTP 401、`errorCode: SESSION_REPLACED`，提示“你的账号已在其他设备登录，当前设备已退出。”客户端先保存原账号的未同步恢复文字，再停止上传和写入、清空当前会话；不刷新或重放原请求，不调用退出全部设备。恢复文字只向原账号展示并由用户手动继续编辑。可见页面每 25 秒及重新聚焦时检查 `/me`；断网和 503 保留会话并提示连接异常。浏览器通过原生锁或同源共享 Worker 串行刷新 Cookie，避免标签页相互竞争。
 
 ## 公开内容
 
@@ -68,7 +72,22 @@
 
 注册、发帖、草稿、评论支持 `Idempotency-Key`（8～128字符，保留24小时）；同键异内容返回409。已有帖子、评论、资料及重要设置编辑必须携带读取时的 `expectedRevision`；首次引导另带 `expectedProfileRevision`。点赞、收藏和关注返回数据库最终状态与计数，不依赖浏览器自增。
 
-`/admin/community/posts|comments|topics|reports|users` 与 `/admin/users` 返回 `{ items, total, page, pageSize }`，`pageSize` 为1～100。帖子支持状态、类型、作者、学校、话题、范围、媒体、举报、日期与稳定排序；用户支持账号关键词、状态、角色、学校、来源、引导、邮箱验证及日期。详情附历史修订、处理记录和可读文件信息；私人草稿和令牌不返回。
+`/admin/community/posts|comments|topics|reports|users` 与 `/admin/users` 返回 `{ items, total, page, pageSize }`，`pageSize` 为1～100。帖子支持状态、类型、作者、学校、话题、范围、媒体、举报、日期与稳定排序；用户支持账号关键词、状态、角色、学校、来源、引导、邮箱验证及日期。详情附历史修订、处理记录和可读文件信息；普通私人草稿和令牌不返回，显式导入的官方外部精选草稿可由运营后台审核并确认发布。
+
+## 资源共创
+
+资源作品仍是社区帖子，`ResourceContribution` 只补充视频、图文或资料的技术元数据。所有学生端资源接口要求登录；详情、播放和下载会再次校验帖子公开状态、作者和资源状态。
+
+| 能力 | 路径 |
+| --- | --- |
+| 首页、分类与完整结果搜索 | `GET /resource-hub/home|categories|items` |
+| 详情、作者与创作中心 | `GET /resource-hub/contributions/:postId|creators/:userId|studio` |
+| 视频和资料上传 | `POST /resource-hub/uploads/video|document` |
+| 播放、重试与进度 | `GET /resource-hub/videos/:id/playback`、`POST /resource-hub/videos/:id/retry`、`PUT /resource-hub/videos/:id/progress` |
+| 合集 | `GET/POST /resource-hub/collections`、`GET/PATCH /resource-hub/collections/:id`、合集项增删和排序 |
+| 签名媒体 | `GET/HEAD /resource-hub/play/:id`、`GET /resource-hub/media/:id|download/:id` |
+
+后台 `/admin/resource-hub` 提供内容、首页配置、分类、失败处理、举报、合集转课程草稿和孤立上传清理；沿用 `resource.read/write`、`community.report.manage` 与 `course.write` 权限。运行、演示导入和消融证据见[资源中心共创](../resource-co-creation.md)。
 
 ## 管理端
 

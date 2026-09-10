@@ -4,7 +4,7 @@
 .community-brand .brand-mark { width: 42px; height: 42px; border-radius: var(--amc-radius-control); font-size: 25px; }
 .community-brand strong { font-size: 16px; letter-spacing: -.035em; white-space: nowrap; }
 .community-brand small { display: block; font-size: 12px; margin-top: 4px; }
-.sidebar-collapse { align-self: flex-end; margin-bottom: 8px; box-shadow: var(--amc-shadow-card); }
+.sidebar-collapse { align-self: flex-end; margin-bottom: 8px; border: 0; border-radius: 0; background: transparent; }
 .community-sidebar-nav { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 .community-nav-group { display: grid; gap: 4px; }
 .community-nav-group + .community-nav-group { margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--amc-divider); }

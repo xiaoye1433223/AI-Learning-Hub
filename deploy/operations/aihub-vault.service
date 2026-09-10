@@ -1,0 +1,22 @@
+[Unit]
+Description=独立故障域的只追加校园社区备份仓库
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=aihub-backup
+Group=aihub-backup
+ExecStart=/usr/local/bin/rest-server --path /srv/aihub-vault --listen :8443 --append-only --private-repos --htpasswd-file /etc/aihub-operations/vault.htpasswd --tls --tls-cert /etc/aihub-operations/vault.crt --tls-key /etc/aihub-operations/vault.key --tls-min-ver 1.3
+Restart=on-failure
+RestartSec=5s
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/aihub-vault
+MemoryMax=512M
+CPUQuota=100%
+TasksMax=64
+[Install]
+WantedBy=multi-user.target

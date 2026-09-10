@@ -1,0 +1,14 @@
+{
+  "bundle": "/srv/restore/explicit-snapshot-id",
+  "workspace_parent": "/srv/restore-workspaces",
+  "config_env_path": "/release/deploy/compose/.env",
+  "acceptance_credentials_file": "/etc/aihub-operations/acceptance.json",
+  "postgres_image": "sha256:待填写64位镜像摘要",
+  "candidate_image": "sha256:待填写本次镜像摘要",
+  "previous_image": "sha256:待填写上次可用镜像摘要",
+  "candidate_student_image": "sha256:待填写本次学生端镜像摘要",
+  "candidate_admin_image": "sha256:待填写本次后台镜像摘要",
+  "previous_student_image": "sha256:待填写上次学生端镜像摘要",
+  "previous_admin_image": "sha256:待填写上次后台镜像摘要",
+  "report": "/srv/restore-reports/drill.json"
+}

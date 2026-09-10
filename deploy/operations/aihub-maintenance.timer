@@ -1,0 +1,8 @@
+[Unit]
+Description=每日校园社区安全清理
+[Timer]
+OnCalendar=*-*-* 03:20:00
+Persistent=true
+RandomizedDelaySec=120
+[Install]
+WantedBy=timers.target
