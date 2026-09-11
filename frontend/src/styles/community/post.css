@@ -92,3 +92,6 @@
 .question-state small { color: var(--amc-text-secondary); font-size: 12px; }
 
 @media (max-width: 767px) { .community-interactions { gap: 2px; } .community-interactions button, .community-interactions a, .community-interactions .community-view-count { justify-content: center; flex: 1; gap: 4px; padding: 4px 2px; white-space: nowrap; } }
+
+.community-digest-btn { cursor: pointer; border: 0; font-family: inherit; }
+.community-digest-btn:hover { filter: brightness(.96); }
