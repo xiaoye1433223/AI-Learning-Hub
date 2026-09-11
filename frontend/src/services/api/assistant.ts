@@ -14,7 +14,11 @@ export interface AssistantConfig {
   enabled: boolean
   name: string
   welcome: string
-  digest: AssistantDigestConfig
+  description?: string
+  entryPosition?: 'left' | 'right'
+  avatarUrl?: string
+  /** 简讯开关与关键词（第一轮配置接口的扩展；后端未下发时按默认值处理）。 */
+  digest?: AssistantDigestConfig
 }
 
 export interface AssistantPostDigest {
@@ -28,10 +32,11 @@ let configPromise: Promise<AssistantConfig> | null = null
 
 export const assistantApi = {
   /**
-   * 助手配置（名称 / 欢迎语 / 启用开关 / 简讯开关与关键词）。刷新页面会重新读取，部署侧改配置后即生效。
+   * 助手配置（名称 / 欢迎语 / 启用开关 / 位置 / 简讯开关与关键词）。刷新页面会重新读取，部署侧改配置后即生效。
+   * 公开读取接口：GET /api/v1/public/assistant-config（关闭时仅返回 enabled=false）。
    */
   config(): Promise<AssistantConfig> {
-    return request<AssistantConfig>('/assistant/config')
+    return request<AssistantConfig>('/public/assistant-config')
   },
 
   /** 配置缓存（同一次页面生命周期只取一次），供入口按钮等高频读取处复用。 */
@@ -41,13 +46,14 @@ export const assistantApi = {
 
   /**
    * 真实问答：沿用项目客户端 request()（自动拼接 API 基址、注入当前登录态）。
+   * 约定：POST /api/v1/assistant/chat，请求 { message, history }，返回 { reply }。
    * 服务端持有模型密钥，前端不保存任何密钥；失败时抛出后端返回的真实提示，由面板原样展示。
    */
-  async send(question: string, history: AssistantMessage[] = []): Promise<string> {
+  async send(message: string, history: AssistantMessage[] = []): Promise<string> {
     const result = await request<{ reply?: string }>('/assistant/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question, history }),
+      body: JSON.stringify({ message, history }),
     })
     const reply = result?.reply
     if (typeof reply === 'string' && reply.trim()) return reply.trim()
