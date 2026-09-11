@@ -1,5 +1,5 @@
 export const adminNavigationGroups = [
-  { label: '工作台', items: [['dashboard', '数据看板', '/dashboard', 'dashboard.read']] },
+  { label: '工作台', items: [['dashboard', '数据看板', '/dashboard', 'dashboard.read'], ['bot', 'AI助手小雪', '/assistant', 'settings.read']] },
   { label: '社区运营', items: [['article', '社区运营', '/community', 'community.read']] },
   { label: '学习内容', items: [
     ['theme', '通识基础', '/themes', 'theme.read'], ['course', '课程内容', '/courses', 'course.read'],

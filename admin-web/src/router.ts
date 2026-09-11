@@ -14,6 +14,7 @@ const router = createRouter({
         { path: '', redirect: '/dashboard' },
         { path: 'account/security', component: () => import('./views/AccountSecurityView.vue'), meta: { title: '账号安全' } },
         { path: 'dashboard', component: () => import('./views/DashboardView.vue'), meta: { title: '数据看板', permission: 'dashboard.read' } },
+        { path: 'assistant', component: () => import('./views/AssistantSettingsView.vue'), meta: { title: 'AI助手小雪', permission: 'settings.read' } },
         { path: 'community', component: () => import('./views/CommunityView.vue'), meta: { title: '社区运营', permission: 'community.read' } },
         { path: 'homepage', component: () => import('./views/HomepageView.vue'), meta: { title: '门户落地页', permission: 'homepage.read' } },
         { path: 'themes', component: () => import('./views/management/ThemeManagementView.vue'), meta: { title: '通识基础管理', permission: 'theme.read' } },
